@@ -50,14 +50,13 @@ def get_request_status(grant_url, headers=http_headers):
         try:
             req = requests.head(grant_url, headers=http_headers)
             successful = True
-        #
         except ConnectionError as e:
             print("connection aborted, waiting 15 seconds...")
             sleep(15)
     status = req.status_code
     print("status is {0}".format(status))
     return status
-    ex
+
 
 
 # creates a proper URL from filename
@@ -147,3 +146,5 @@ def get():
     print("\nunzipping")
     unzip_xml(cwd + "/cache/" + filename + "v2.zip")
     return cwd + "/cache/extracted/" + filename + "v2.xml"
+
+print(get())
