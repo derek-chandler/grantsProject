@@ -2,11 +2,11 @@ import os
 import zipfile
 import wget
 import requests
+from time import sleep, time
 from requests.exceptions import ConnectionError
 from http.client import RemoteDisconnected
 from datetime import datetime, timedelta
 
-from time import sleep
 
 """
 get the latest zip file from grants.gov based on current date
@@ -58,7 +58,6 @@ def get_request_status(grant_url, headers=http_headers):
     return status
 
 
-
 # creates a proper URL from filename
 # filename excludes the v2 and extension
 def gen_proper_url(filename):
@@ -92,6 +91,7 @@ def get_latest_info(max_age=4):
 
 
 def get():
+    initial_time = time()
     # "current working directory"
     # aka where the python script is running in
     cwd = os.getcwd()
@@ -145,6 +145,8 @@ def get():
 
     print("\nunzipping")
     unzip_xml(cwd + "/cache/" + filename + "v2.zip")
+    print("took {0}s".format(time() - initial_time))
     return cwd + "/cache/extracted/" + filename + "v2.xml"
+
 
 print(get())
