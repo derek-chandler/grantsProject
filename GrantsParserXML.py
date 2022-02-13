@@ -29,7 +29,7 @@ def dateStringVersion(date):
     else:
         newDate = 'N/A'
     return newDate
-S
+
 #convert our dates into a year, month, day hierarchy so that earlier dates are natrually smaller numbers (strings in this case) than later dates
 def dateHierarchyForm(date):
     newDate = date[4:] + date[:4]
