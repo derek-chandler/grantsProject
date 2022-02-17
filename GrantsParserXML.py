@@ -1,5 +1,6 @@
 import xml.etree.ElementTree as et
 import html as html
+import bs4_filegrabtest
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -171,7 +172,7 @@ https://newbedev.com/efficient-way-to-iterate-through-xml-elements
 '''
 
 # Parse our file and store it in a tree
-mytree = et.parse(r'grantsProject\GrantsDBExtract20220118v2\GrantsDBExtract20220118v2.xml')
+mytree = et.parse(bs4_filegrabtest.get())
 
 # Store the root element of this file
 myroot = mytree.getroot()
@@ -188,7 +189,7 @@ for opportunity in myroot:
     # Get the postdate first
     postDate = getOpportunityInfo(opportunity, 'PostDate')  # getattr(opportunity.find(linkString + 'PostDate'), 'text', 'N/A')
     # Set the desired earliest date
-    if (dateHierarchyForm(postDate) >= '20220111'): # change the string at the right of the operator to change the beginning date
+    if (dateHierarchyForm(postDate) >= '20220215'): # change the string at the right of the operator to change the beginning date
         
         print('************************************************************************************************************************')
         print()
