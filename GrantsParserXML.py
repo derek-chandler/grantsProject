@@ -164,6 +164,11 @@ def printGrant(grant):
 
     print()
 
+# function to create a dictionary using the distinctAgency as a key and the grants as values
+def grantDictionaryAdd(grantDictionary, grant):
+    grantDictionary.setdefault(grant.distinctAgency, []).append(grant)
+    return grantDictionary
+
 # ********************************DRIVER_CODE****************************************************************************
 
 '''
@@ -182,6 +187,7 @@ count = 0
 
 # Declare our list to store agency names
 agencyList = []
+grantDictionary = {}
 
 # Check each grant opportunity in our tree
 for opportunity in myroot:
@@ -191,8 +197,8 @@ for opportunity in myroot:
     # Set the desired earliest date
     if (dateHierarchyForm(postDate) >= '20220215'): # change the string at the right of the operator to change the beginning date
         
-        print('************************************************************************************************************************')
-        print()
+        #print('************************************************************************************************************************')
+        #print()
         
         #Store each text of qualifying grants as a string, or store as 'N/A' if none exist 
         grant = Grant(agencyList,
@@ -211,8 +217,8 @@ for opportunity in myroot:
         )
         
         # Create a grant object
-        
-        printGrant(grant)
+        grantDictionary = grantDictionaryAdd(grantDictionary, grant)
+        #printGrant(grant)
        
         # Count the selected grant
         count +=1
@@ -226,9 +232,19 @@ print()
 agencyList.sort()
 
 #print the list of agencies
+
 print('Table of Contents')
 print('----------------------------------------------------------------------')
 for x in agencyList:
     print(x)
 
+# Using the grantDictionary, print out each grant for Department of Education key 
+print('----------------------------------------------------------------------')
+print()
+print('ALL DEPARTMENT OF EDUCATION GRANTS')
+print()
+for gr in grantDictionary['Department of Education']:
+    print('**********************************************************************************************************')
+    printGrant(gr)
+   
 
