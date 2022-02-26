@@ -87,14 +87,12 @@ def generateAgencyName(agencyCode):
 # to multiple instances of the same agency with additional information)
 def tableOfContents(listA, agency):
 
-    agency = generateAgencyName(agency)
-
     if agency in listA:                     # if the agency is already in the list, we don't need to add it again
-        return
+        return listA
     else:
         listA.append(agency)                # if the agency is not in the list, we add it to the list
 
-    return 0
+    return listA
 
 # function to return an attribute of interest from a given opportunity
 def getOpportunityInfo(opportunity, attribute):
@@ -106,7 +104,7 @@ def getOpportunityInfo(opportunity, attribute):
 #********************************************MAIN Object*****************************************************************
 class Grant:
     
-    def __init__(self, listA, agencyCode, agencyName, opportunityTitle, postDate, dueDate, numAwards, 
+    def __init__(self, agencyCode, agencyName, opportunityTitle, postDate, dueDate, numAwards, 
         totalFunding, awardCeiling, awardFloor, oppNumber, description, eligApplicants = 'N/A'):
 
         self.agencyCode = agencyCode
@@ -123,7 +121,6 @@ class Grant:
         self.description = description
         self.eligApplicants = eligApplicants
 
-        tableOfContents(listA, self.agencyCode)
     '''
     # would like to find a way to implement this idea, need to study objects in python further
 
@@ -201,7 +198,7 @@ for opportunity in myroot:
         #print()
         
         #Store each text of qualifying grants as a string, or store as 'N/A' if none exist 
-        grant = Grant(agencyList,
+        grant = Grant(
         agencyCode = getOpportunityInfo(opportunity, 'AgencyCode'),
         agencyName = getOpportunityInfo(opportunity, 'AgencyName'),
         opportunityTitle = html.unescape(getOpportunityInfo(opportunity, 'OpportunityTitle')),
@@ -215,7 +212,7 @@ for opportunity in myroot:
         description = html.unescape(getOpportunityInfo(opportunity, 'Description')),
         eligApplicants = getOpportunityInfo(opportunity, 'EligibleApplicants')
         )
-        
+        tableOfContents(agencyList, grant.distinctAgency)
         # Create a grant object
         grantDictionary = grantDictionaryAdd(grantDictionary, grant)
         #printGrant(grant)
