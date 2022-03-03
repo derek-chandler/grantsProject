@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as et
 import html as html
-import bs4_filegrabtest
+import GrantDownloader
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -214,7 +214,7 @@ https://newbedev.com/efficient-way-to-iterate-through-xml-elements
 '''
 
 # Parse our file and store it in a tree
-mytree = et.parse(bs4_filegrabtest.get())
+mytree = et.parse(GrantDownloader.get())
 
 # Store the root element of this file
 myroot = mytree.getroot()

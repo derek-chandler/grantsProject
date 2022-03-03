@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup as bs
 from http.client import RemoteDisconnected
 from requests.exceptions import ConnectionError
 
+
 """
 get the latest zip file from grants.gov
 
@@ -28,8 +29,9 @@ def unzip_xml(filename):
 
 
 # driver function using beautifulsoup4 web scraping library
-def get():
-    initial_time = time()
+def get(runtime=False):
+    if runtime:
+        initial_time = time()
     #################################################
     ## Cache directory creation/existence checking ##
     #################################################
@@ -121,7 +123,8 @@ def get():
     ########################################
     print("\nunzipping")
     unzip_xml(cwd + "/cache/" + filename + "v2.zip")
-    print("took {0}s".format(time() - initial_time))
+    if runtime:
+        print("took {0}s".format(time() - initial_time))
     return cwd + "/cache/extracted/" + filename + "v2.xml"
 
 
