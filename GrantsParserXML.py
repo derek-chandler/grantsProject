@@ -86,7 +86,7 @@ def addCommas(amountStr):
         # then add the number it's currently on
         newAmount += reverse[i]
     # return reverse of newAmount, aka the new string
-    return newAmount[::-1]
+    return "${0}".format(newAmount[::-1])
 
 
 # convert our dates into a year, month, day hierarchy so that earlier dates are natrually smaller numbers (strings in this case) than later dates
@@ -188,9 +188,9 @@ def printGrant(grant):
     print("Due date:                        " +
           dateStringVersion(grant.dueDate))
     print("Expected Number of awards:       " + grant.numAwards)
-    print("Estimated total program funding: $" + addCommas(grant.totalFunding))
-    print("Award Ceiling:                   $" + addCommas(grant.awardCeiling))
-    print("Award floor:                     $" + addCommas(grant.awardFloor))
+    print("Estimated total program funding: " + addCommas(grant.totalFunding))
+    print("Award Ceiling:                   " + addCommas(grant.awardCeiling))
+    print("Award floor:                     " + addCommas(grant.awardFloor))
     print("Funding opportunity number:      " + grant.oppNumber)
     print()
     print("Purpose: " + grant.description)
@@ -234,7 +234,7 @@ for opportunity in myroot:
     postDate = getOpportunityInfo(opportunity, 'PostDate')
     # Set the desired earliest date
     # change the string at the right of the operator to change the beginning date
-    if (dateHierarchyForm(postDate) >= '20220215'):
+    if (dateHierarchyForm(postDate) >= '20210215'):
 
         # print('************************************************************************************************************************')
         # print()
