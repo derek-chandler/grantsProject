@@ -29,8 +29,8 @@ def unzip_xml(filename):
 
 
 # driver function using beautifulsoup4 web scraping library
-def get(runtime=False):
-    if runtime:
+def get(_time=False):
+    if _time:
         initial_time = time()
     #################################################
     ## Cache directory creation/existence checking ##
@@ -86,11 +86,15 @@ def get(runtime=False):
     # test if XML file exists first to avoid re-downloading zip if unnecessary
     if os.path.isfile(cwd + "/cache/extracted/" + filename + "v2.xml"):
         print("XML file exists")
+        if _time:
+            print("took {0}s".format(time() - initial_time))
         return cwd + "/cache/extracted/" + filename + "v2.xml"
     # test if zip file exists
     if os.path.isfile(cwd + "/cache/" + filename + "v2.zip"):
         print("zip file exists, unzipping")
         unzip_xml(cwd + "/cache/" + filename + "v2.zip")
+        if _time:
+            print("took {0}s".format(time() - initial_time))
         return cwd + "/cache/extracted/" + filename + "v2.xml"
     print("does not exist, downloading")
 
@@ -123,7 +127,7 @@ def get(runtime=False):
     ########################################
     print("\nunzipping")
     unzip_xml(cwd + "/cache/" + filename + "v2.zip")
-    if runtime:
+    if _time:
         print("took {0}s".format(time() - initial_time))
     return cwd + "/cache/extracted/" + filename + "v2.xml"
 
