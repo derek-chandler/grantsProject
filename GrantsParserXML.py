@@ -1,6 +1,9 @@
 import xml.etree.ElementTree as et
 import html as html
 import GrantDownloader
+from tkinter import *
+from tkcalendar import Calendar
+import datetime
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -216,6 +219,55 @@ https://newbedev.com/efficient-way-to-iterate-through-xml-elements
 # Parse our file and store it in a tree
 mytree = et.parse(GrantDownloader.get())
 
+# --------------------------- UI BEGIN ---------------------------
+
+# Basic Settings, window title / size
+root = Tk()
+root.title('Gov Date Doohicky')
+root.iconbitmap('resource/icon.ico')
+root.geometry("500x320")
+
+# Sets layout of modules
+top = Frame(root)
+bottom = Frame(root, width=100)
+top.pack(side=TOP)
+bottom.pack(side=BOTTOM, fill=None, expand=False)
+
+# Set curent datetime to user's computer time
+d = datetime.date.today()
+userdate = ""
+
+# Sets padding and text of UI Label
+my_toplabel = Label(root, text="Please select a starting date")
+my_toplabel.pack(pady=10, in_=top)
+
+# Set and post calendar
+cal = Calendar(root, selectmode="day", year=d.year, month=d.month, day=d.day, borderwidth='5', date_pattern='yyyymmdd', selectbackground='#000000', weekendbackground='#ffffff', weekendforeground='#000000', othermonthwebackground='lightgray', othermonthbackground='lightgray')
+cal.pack(in_=top)
+
+# Function for collecting date from calendar
+def grab_date():
+    global userdate
+    my_label.config(text=cal.get_date())
+    userdate = cal.get_date()
+
+# Button for grabbing date data from calendar
+my_button = Button(root, text="Get Date", command=grab_date, activebackground='gray')
+my_button.pack(pady=10, padx=10, in_=bottom, side=LEFT)
+
+# Secondary close button
+my_confirmbutton = Button(root, text="Confirm", command=root.destroy, activebackground='gray')
+my_confirmbutton.pack(pady=10, padx=10, in_=bottom, side=RIGHT)
+
+# Location for date to post
+my_label = Label(root, text="")
+my_label.pack(pady=10)
+
+# loopy boi
+root.mainloop()
+
+# --------------------------- UI END ---------------------------
+
 # Store the root element of this file
 myroot = mytree.getroot()
 
@@ -233,8 +285,8 @@ for opportunity in myroot:
     # getattr(opportunity.find(linkString + 'PostDate'), 'text', 'N/A')
     postDate = getOpportunityInfo(opportunity, 'PostDate')
     # Set the desired earliest date
-    # change the string at the right of the operator to change the beginning date
-    if (dateHierarchyForm(postDate) >= '20210215'):
+    # Finds grants of date greater than user date found in UI
+    if (dateHierarchyForm(postDate) >= userdate):
 
         # print('************************************************************************************************************************')
         # print()
