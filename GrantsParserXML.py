@@ -223,7 +223,7 @@ mytree = et.parse(GrantDownloader.get())
 
 # Basic Settings, window title / size
 root = Tk()
-root.title('Gov Date Doohicky')
+root.title('US Government Grant Report Tool')
 root.iconbitmap('resource/icon.ico')
 root.geometry("500x320")
 
