@@ -4,6 +4,7 @@ import GrantDownloader
 from tkinter import *
 from tkcalendar import Calendar
 import datetime
+import os
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -224,7 +225,10 @@ mytree = et.parse(GrantDownloader.get())
 # Basic Settings, window title / size
 root = Tk()
 root.title('US Government Grant Report Tool')
-root.iconbitmap('resource/icon.ico')
+if os.name == 'posix':
+    root.iconbitmap('@resource/tux.xbm')
+else:
+    root.iconbitmap('resource/icon.ico')
 root.geometry("500x320")
 
 # Sets layout of modules
@@ -242,21 +246,27 @@ my_toplabel = Label(root, text="Please select a starting date")
 my_toplabel.pack(pady=10, in_=top)
 
 # Set and post calendar
-cal = Calendar(root, selectmode="day", year=d.year, month=d.month, day=d.day, borderwidth='5', date_pattern='yyyymmdd', selectbackground='#000000', weekendbackground='#ffffff', weekendforeground='#000000', othermonthwebackground='lightgray', othermonthbackground='lightgray')
+cal = Calendar(root, selectmode="day", year=d.year, month=d.month, day=d.day, borderwidth='5', date_pattern='yyyymmdd', selectbackground='#000000',
+               weekendbackground='#ffffff', weekendforeground='#000000', othermonthwebackground='lightgray', othermonthbackground='lightgray')
 cal.pack(in_=top)
 
 # Function for collecting date from calendar
+
+
 def grab_date():
     global userdate
     my_label.config(text=cal.get_date())
     userdate = cal.get_date()
 
+
 # Button for grabbing date data from calendar
-my_button = Button(root, text="Get Date", command=grab_date, activebackground='gray')
+my_button = Button(root, text="Get Date", command=grab_date,
+                   activebackground='gray')
 my_button.pack(pady=10, padx=10, in_=bottom, side=LEFT)
 
 # Secondary close button
-my_confirmbutton = Button(root, text="Confirm", command=root.destroy, activebackground='gray')
+my_confirmbutton = Button(root, text="Confirm",
+                          command=root.destroy, activebackground='gray')
 my_confirmbutton.pack(pady=10, padx=10, in_=bottom, side=RIGHT)
 
 # Location for date to post
