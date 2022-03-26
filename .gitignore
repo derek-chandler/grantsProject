@@ -3,3 +3,5 @@ cache/
 .vscode
 __pycache__/
 venv
+*.docx
+!templet.docx
