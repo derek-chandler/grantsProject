@@ -4,4 +4,5 @@ cache/
 __pycache__/
 venv
 *.docx
+*.docx#
 !templet.docx
