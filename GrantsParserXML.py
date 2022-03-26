@@ -79,21 +79,12 @@ def dateStringVersion(date):
 # input a string to add commas
 # example input : 10000000
 # example output: 10,000,000
-def addCommas(amountStr):
+def addCommasAndDollarSign(amountStr):
     # check if string is a number, if not return the string back
     if not amountStr.isnumeric():
         return amountStr
-    # reverse string
-    reverse = amountStr[::-1]
-    newAmount = ""
-    for i in range(0, len(reverse)):
-        # if it's already been 3 characters, add a comma
-        if i % 3 == 0 and i != 0:
-            newAmount += ","
-        # then add the number it's currently on
-        newAmount += reverse[i]
-    # return reverse of newAmount, aka the new string
-    return "${0}".format(newAmount[::-1])
+    else:
+        return "${:,}".format(int(amountStr))
 
 
 # convert our dates into a year, month, day hierarchy so that earlier dates are natrually smaller numbers (strings in this case) than later dates
@@ -155,37 +146,14 @@ class Grant:
         self.postDate = postDate
         self.dueDate = dueDate
         self.numAwards = numAwards
-        self.totalFunding = totalFunding
-        self.awardCeiling = awardCeiling
-        self.awardFloor = awardFloor
+        self.totalFunding = addCommasAndDollarSign(totalFunding)
+        self.awardCeiling = addCommasAndDollarSign(awardCeiling)
+        self.awardFloor = addCommasAndDollarSign(awardFloor)
         self.oppNumber = oppNumber
         self.description = description
         self.eligApplicants = eligApplicants
 
-    '''
-    # would like to find a way to implement this idea, need to study objects in python further
-
-    def __init__(self, listA, opportunity, agencyCode, agencyName, opportunityTitle, postDate, dueDate, numAwards, 
-        totalFunding, awardCeiling, awardFloor, oppNumber, description, eligApplicants = 'N/A'):
-        
-        self.agencyCode = getattr(opportunity.find(linkString + 'AgencyCode'), 'text', 'N/A')
-        self.distinctAgency = generateAgencyName(self.agencyCode)
-        self.agencyName = getattr(opportunity.find(linkString + 'AgencyName'), 'text', 'N/A')
-        self.opportunityTitle = getattr(opportunity.find(linkString + 'OpportunityTitle'), 'text', 'N/A')
-        self.postDate = getattr(opportunity.find(linkString + 'PostDate'), 'text', 'N/A')
-        self.dueDate = getattr(opportunity.find(linkString + 'DueDate'), 'text', 'N/A')
-        self.numAwards = getattr(opportunity.find(linkString + 'NumberOfAwards'), 'text', 'N/A')
-        self.totalFunding = getattr(opportunity.find(linkString + 'TotalFunding'), 'text', 'N/A')
-        self.awardCeiling = getattr(opportunity.find(linkString + 'AwardCeiling'), 'text', 'N/A')
-        self.awardFloor = getattr(opportunity.find(linkString + 'AwardFloor'), 'text', 'N/A')
-        self.oppNumber = getattr(opportunity.find(linkString + 'OpportunityNumber'), 'text', 'N/A')
-        self.description = getattr(opportunity.find(linkString + 'Description'), 'text', 'N/A')
-        self.eligApplicants = getattr(opportunity.find(linkString + 'EligibleApplicants'), 'text', 'N/A')
-
-        tableOfContents(listA, self.agencyCode)
-    '''
 # ********************************************MAIN FUNCTIONS*****************************************************************
-
 
 def printGrant(grant):
     print("Agency name:                     " + grant.agencyName)
@@ -253,9 +221,8 @@ cal = Calendar(root, selectmode="day", year=d.year, month=d.month, day=d.day, bo
                weekendbackground='#ffffff', weekendforeground='#000000', othermonthwebackground='lightgray', othermonthbackground='lightgray')
 cal.pack(in_=top)
 
+
 # Function for collecting date from calendar
-
-
 def grab_date():
     global userdate
     my_label.config(text=cal.get_date())
