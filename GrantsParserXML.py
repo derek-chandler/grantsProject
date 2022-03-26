@@ -5,6 +5,9 @@ from tkinter import *
 from tkcalendar import Calendar
 import datetime
 import os
+from datetime import date
+import word
+import docx
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -327,25 +330,84 @@ for opportunity in myroot:
         # Count the selected grant
         count += 1
 
-print('**********************************************************************************************************')
-# Print out the number of grants that qualified. I used this to check to make sure pruning was happening
-print("Number of grants", count)
+# print('**********************************************************************************************************')
+# # Print out the number of grants that qualified. I used this to check to make sure pruning was happening
+# print("Number of grants", count)
 
-# sort the list of agencies
-print()
+# # sort the list of agencies
+# print()
 agencyList.sort()
 
 # print the list of agencies
-print('Table of Contents')
-print('----------------------------------------------------------------------')
-for x in agencyList:
-    print(x)
+# print('Table of Contents')
+# print('----------------------------------------------------------------------')
+# for x in agencyList:
+#     print(x)
 
-# Using the grantDictionary, print out each grant for Department of Education key
-print('----------------------------------------------------------------------')
-print()
-print('ALL DEPARTMENT OF EDUCATION GRANTS')
-print()
-for gr in grantDictionary['Department of Education']:
-    print('**********************************************************************************************************')
-    printGrant(gr)
+# # Using the grantDictionary, print out each grant for Department of Education key
+# print('----------------------------------------------------------------------')
+# print()
+# print('ALL DEPARTMENT OF EDUCATION GRANTS')
+# print()
+# for gr in grantDictionary['Department of Education']:
+#     print('**********************************************************************************************************')
+#     printGrant(gr)
+
+#! Opens the word templet file
+doc = docx.Document("templet.docx")
+
+bookmark_list = list()
+
+#! change text in paragraph 9 to the number of grants
+doc.paragraphs[9].text = str(date.today().strftime("%B %d, %Y"))
+
+#! This prints generates the bookmarks
+for agency  in agencyList:
+    paragraph = doc.add_paragraph()
+    paragraph_format = paragraph.paragraph_format
+    paragraph_format.line_spacing = 1.0
+    word.add_bookmark(paragraph, agency, f"{agency} bookmark")
+    bookmark_list.append(paragraph)
+
+    grantDictionary[agency].sort(key=lambda x: x.dueDate)
+
+    # Loop over each grant in the dictionary
+    grant_list = grantDictionary.get(agency)
+    for i in grant_list:
+        paragraph = doc.add_paragraph()
+        paragraph_format = paragraph.paragraph_format
+        paragraph_format.line_spacing = 1.0
+        paragraph.add_run(f"\nAgency Name: {i.opportunityTitle}")
+        paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}")
+        paragraph.add_run(f"\nPost Date: {i.postDate}")
+        paragraph.add_run(f"\nDue Date {i.dueDate}")
+        paragraph.add_run(f"\nExpected Number of awards: {i.numAwards}")
+        paragraph.add_run(f"\nEstimated total program funding: {i.totalFunding}")
+        paragraph.add_run(f"\nAward Ceiling: {i.awardCeiling}")
+        paragraph.add_run(f"\nAward Floor: {i.awardFloor}")
+        paragraph.add_run(f"\nFunding Opportunity Number{i.oppNumber}")
+        paragraph.add_run(f"\n\n{i.description}")
+        paragraph.add_run(f"\n\nEligible Applicants{i.eligApplicants}")
+        paragraph.add_run(f"\n\n")
+
+
+for index, bookmark in enumerate(bookmark_list):
+    """_summary_
+
+    Args:
+        bookmarkinenumerate (_type_): _description_
+    """
+    word.add_link(bookmark, agencyList[index], f"{agencyList[index]} link")
+
+    # # table_of_content = doc.paragraphs[11].add_run(f"{agency}")
+    # table_of_content = doc.paragraphs[11]
+    # toc = doc.add_paragraph(agency)
+    # table_of_content.insert_paragraph_after(toc)
+
+
+
+# for i in grantDictionary["Agency for International Development"]:
+
+#     print(i.awardCeiling)
+
+doc.save("sample.docx")
