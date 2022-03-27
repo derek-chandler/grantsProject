@@ -4,7 +4,9 @@
  * All python packages in [requirements.txt](https://github.com/derek-chandler/grantsProject/blob/main/requirements.txt)
 
 ## Usage
- 1. Install all requirements: `pip install -r requirements.txt`
+ 1. Install all requirements:
+    * Windows: `python -m pip install -r requirements.txt`
+    * Linux: `pip install -r requirements.txt`
  2. Execute the program: `python GrantsParserXML.py`.
     * This may take a few minutes depending on your download speed
  3. Choose the earliest date you want grants for from the calendar pop-up
