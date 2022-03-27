@@ -344,6 +344,7 @@ for agency  in agencyList:
         paragraph = doc.add_paragraph()
         paragraph_format = paragraph.paragraph_format
         paragraph_format.line_spacing = 1.0
+        
         paragraph.add_run(f"\nAgency Name: {i.opportunityTitle}")
         paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}")
         paragraph.add_run(f"\nPost Date: {i.postDate}")
@@ -352,9 +353,9 @@ for agency  in agencyList:
         paragraph.add_run(f"\nEstimated total program funding: {i.totalFunding}")
         paragraph.add_run(f"\nAward Ceiling: {i.awardCeiling}")
         paragraph.add_run(f"\nAward Floor: {i.awardFloor}")
-        paragraph.add_run(f"\nFunding Opportunity Number{i.oppNumber}")
-        paragraph.add_run(f"\n\n{i.description}")
-        paragraph.add_run(f"\n\nEligible Applicants{i.eligApplicants}")
+        paragraph.add_run(f"\nFunding Opportunity Number: {i.oppNumber}")
+        paragraph.add_run(f"\n\nPurpose: {i.description}")
+        paragraph.add_run(f"\n\nEligible Applicants: {i.eligApplicants}")
         paragraph.add_run(f"\n\n")
 
 
