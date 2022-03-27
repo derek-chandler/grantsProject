@@ -163,9 +163,9 @@ def printGrant(grant):
     print("Due date:                        " +
           dateStringVersion(grant.dueDate))
     print("Expected Number of awards:       " + grant.numAwards)
-    print("Estimated total program funding: " + addCommas(grant.totalFunding))
-    print("Award Ceiling:                   " + addCommas(grant.awardCeiling))
-    print("Award floor:                     " + addCommas(grant.awardFloor))
+    print("Estimated total program funding: " + addCommasAndDollarSign(grant.totalFunding))
+    print("Award Ceiling:                   " + addCommasAndDollarSign(grant.awardCeiling))
+    print("Award floor:                     " + addCommasAndDollarSign(grant.awardFloor))
     print("Funding opportunity number:      " + grant.oppNumber)
     print()
     print("Purpose: " + grant.description)
