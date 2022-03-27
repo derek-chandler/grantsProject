@@ -1,15 +1,15 @@
 # grantsProject
-no more instructions lol
+## Requirements
+ * [Python 3.10](https://www.python.org/downloads/) or above
+ * All python packages in [requirements.txt](https://github.com/derek-chandler/grantsProject/blob/main/requirements.txt)
 
-# test bla bla
-## smaller text
- * this is a list
- * with
- * some items
+## Usage
+ 1. Install all requirements: `pip install -r requirements.txt`
+ 2. Execute the program: `python GrantsParserXML.py`.
+    * This may take a few minutes depending on your download speed
+ 3. Choose the earliest date you want grants for from the calendar pop-up
+ 4. Click **Get Date**, then **Confirm**
 
- 1. and
- 2. this
- 3. has
- 4. numbers
+Once the program finishes, **sample.docx** will be generated in the program's root directory
 
-[and this is a link](https://marshall-bb.blackboard.com/ultra/courses/_130974_1/cl/outline)
+If you wish to generate another report, please rename or move **sample.docx** from the program's root directory
