@@ -328,8 +328,15 @@ bookmark_list = list()
 #! change text in paragraph 9 to the number of grants
 doc.paragraphs[9].text = str(date.today().strftime("%B %d, %Y"))
 
+#! Set pointer to equal paragraph 11
+paracount = 11
+pointer = doc.paragraphs[paracount]
+
 #! This prints generates the bookmarks
 for agency  in agencyList:
+    word.insert_paragraph_after(pointer, agency)
+    paracount += 1
+    
     paragraph = doc.add_paragraph()
     paragraph_format = paragraph.paragraph_format
     paragraph_format.line_spacing = 1.0

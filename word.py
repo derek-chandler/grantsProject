@@ -2,6 +2,8 @@ import docx
 from docx import Document
 from docx.enum.dml import MSO_THEME_COLOR_INDEX
 from docx.shared import Length
+from docx.text.paragraph import Paragraph
+from docx.oxml.xmlchemy import OxmlElement
 
 
 def add_bookmark(paragraph, bookmark_text, bookmark_name):
@@ -42,6 +44,17 @@ def add_link(paragraph, link_to, text, tool_tip=None):
     r.font.name = "Calibri"
     r.font.color.theme_color = MSO_THEME_COLOR_INDEX.HYPERLINK
     r.font.underline = True
+
+def insert_paragraph_after(paragraph, text=None, style=None):
+    """Insert a new paragraph after the given paragraph."""
+    new_p = OxmlElement("w:p")
+    paragraph._p.addnext(new_p)
+    new_para = Paragraph(new_p, paragraph._parent)
+    if text:
+        new_para.add_run(text)
+    if style is not None:
+        new_para.style = style
+    return new_para
 
 if __name__ == "__main__":
     doc = docx.Document('templet.docx')
