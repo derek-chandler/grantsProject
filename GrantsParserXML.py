@@ -2,8 +2,8 @@ import xml.etree.ElementTree as et
 import html as html
 import GrantDownloader
 from tkinter import *
-from tkcalendar import Calendar
-import datetime
+from tkinter import messagebox
+from tkcalendar import DateEntry
 import os
 from datetime import date
 import word
@@ -213,31 +213,32 @@ d = datetime.date.today()
 userdate = ""
 
 # Sets padding and text of UI Label
-my_toplabel = Label(root, text="Please select a starting date")
+my_toplabel = Label(root, text="Please select a date range")
 my_toplabel.pack(pady=10, in_=top)
 
 # Set and post calendar
-cal = Calendar(root, selectmode="day", year=d.year, month=d.month, day=d.day, borderwidth='5', date_pattern='yyyymmdd', selectbackground='#000000',
-               weekendbackground='#ffffff', weekendforeground='#000000', othermonthwebackground='lightgray', othermonthbackground='lightgray')
-cal.pack(in_=top)
+calone = DateEntry(root, width=12, background='darkblue',
+                   foreground='white', borderwidth=2)
+calone.pack(in_=top, side=LEFT, padx=20, pady=10)
+
+caltwo = DateEntry(root, width=12, background='darkblue',
+                   foreground='white', borderwidth=2)
+caltwo.pack(in_=top, side=RIGHT, padx=20, pady=10)
 
 
 # Function for collecting date from calendar
 def grab_date():
-    global userdate
-    my_label.config(text=cal.get_date())
-    userdate = cal.get_date()
+    global userdateone, userdatetwo
+    userdateone = calone.get_date()
+    userdatetwo = caltwo.get_date()
+    if userdateone > userdatetwo:
+        messagebox.showerror("uhoh", "bad guy!")
+    else: root.destroy()
 
 
-# Button for grabbing date data from calendar
-my_button = Button(root, text="Get Date", command=grab_date,
-                   activebackground='gray')
-my_button.pack(pady=10, padx=10, in_=bottom, side=LEFT)
-
-# Secondary close button
-my_confirmbutton = Button(root, text="Confirm",
-                          command=root.destroy, activebackground='gray')
-my_confirmbutton.pack(pady=10, padx=10, in_=bottom, side=RIGHT)
+# Button Grabs selected dates then closes if userdateone > userdatetwo
+my_button = Button(root, text="Confirm", activebackground='gray', command=grab_date)
+my_button.pack(pady=10, padx=10, in_=bottom, side=RIGHT)
 
 # Location for date to post
 my_label = Label(root, text="")
@@ -245,6 +246,11 @@ my_label.pack(pady=10)
 
 # loopy boi
 root.mainloop()
+
+# Convert datetime object to string for comparison
+dateRangeOne = userdateone.strftime("%Y%m%d")
+dateRangeTwo = userdateone.strftime("%Y%m%d")
+print(dateRangeTwo, dateRangeOne)
 
 # --------------------------- UI END ---------------------------
 
@@ -265,8 +271,8 @@ for opportunity in myroot:
     # getattr(opportunity.find(linkString + 'PostDate'), 'text', 'N/A')
     postDate = getOpportunityInfo(opportunity, 'PostDate')
     # Set the desired earliest date
-    # Finds grants of date greater than user date found in UI
-    if (dateHierarchyForm(postDate) >= userdate):
+    # Finds grants of date date range selected in UI
+    if dateRangeOne <= dateHierarchyForm(postDate) <= dateRangeTwo:
 
         # print('************************************************************************************************************************')
         # print()
