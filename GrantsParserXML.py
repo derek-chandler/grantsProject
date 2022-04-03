@@ -8,6 +8,8 @@ import os
 from datetime import date
 import word
 import docx
+from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -332,11 +334,25 @@ doc.paragraphs[9].text = str(date.today().strftime("%B %d, %Y"))
 paracount = 11
 pointer = doc.paragraphs[paracount]
 
-#! This prints generates the bookmarks
-for agency  in agencyList:
+#! Build the table of contents first
+for agency in agencyList:
     word.insert_paragraph_after(pointer, agency)
     paracount += 1
+    pointer = doc.paragraphs[paracount]
     
+line = doc.add_paragraph()
+line.alignment = WD_ALIGN_PARAGRAPH.CENTER
+run = line.add_run("\nGrants\n")
+run.bold = True
+font = run.font
+font.size = Pt(22)
+font.name = 'Times New Roman'
+font.underline = True
+
+
+#! This prints generates the bookmarks
+for agency  in agencyList:
+
     paragraph = doc.add_paragraph()
     paragraph_format = paragraph.paragraph_format
     paragraph_format.line_spacing = 1.0
@@ -351,18 +367,25 @@ for agency  in agencyList:
         paragraph = doc.add_paragraph()
         paragraph_format = paragraph.paragraph_format
         paragraph_format.line_spacing = 1.0
-        
-        paragraph.add_run(f"\nAgency Name: {i.opportunityTitle}")
-        paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}")
-        paragraph.add_run(f"\nPost Date: {i.postDate}")
-        paragraph.add_run(f"\nDue Date {i.dueDate}")
-        paragraph.add_run(f"\nExpected Number of awards: {i.numAwards}")
-        paragraph.add_run(f"\nEstimated total program funding: {i.totalFunding}")
-        paragraph.add_run(f"\nAward Ceiling: {i.awardCeiling}")
-        paragraph.add_run(f"\nAward Floor: {i.awardFloor}")
-        paragraph.add_run(f"\nFunding Opportunity Number: {i.oppNumber}")
-        paragraph.add_run(f"\n\nPurpose: {i.description}")
-        paragraph.add_run(f"\n\nEligible Applicants: {i.eligApplicants}")
+
+        paragraph.add_run(f"\nAgency Name: {i.opportunityTitle}").bold = True
+        paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}").bold = True
+        paragraph.add_run(f"\nPost Date: {i.postDate}").bold = True
+        paragraph.add_run(f"\nDue Date {i.dueDate}").bold = True
+        paragraph.add_run(f"\nExpected Number of awards: {i.numAwards}").bold = True
+        paragraph.add_run(f"\nEstimated total program funding: {i.totalFunding}").bold = True
+        paragraph.add_run(f"\nAward Ceiling: {i.awardCeiling}").bold = True
+        paragraph.add_run(f"\nAward Floor: {i.awardFloor}").bold = True
+        paragraph.add_run(f"\nFunding Opportunity Number: {i.oppNumber}").bold = True
+
+        run = paragraph.add_run(f"\n\nPurpose: {i.description}")
+        font = run.font
+        font.size = Pt(12)
+        font.italic = True
+        font.name = 'Times New Roman'
+
+
+        paragraph.add_run(f"\n\nEligible Applicants: {i.eligApplicants}").bold = True
         paragraph.add_run(f"\n\n")
 
 
