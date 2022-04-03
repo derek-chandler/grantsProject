@@ -5,7 +5,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkcalendar import DateEntry
 import os
-from datetime import date
+from datetime
 import word
 import docx
 
@@ -193,6 +193,10 @@ mytree = et.parse(GrantDownloader.get())
 
 # --------------------------- UI BEGIN ---------------------------
 
+# Set today's date and set last week's date
+today = datetime.date.today()
+last_week = today - datetime.timedelta(days=7)
+
 # Basic Settings, window title / size
 root = Tk()
 root.title('US Government Grant Report Tool')
@@ -212,9 +216,9 @@ bottom.pack(side=BOTTOM, fill=None, expand=False)
 my_toplabel = Label(root, text="Please select a date range")
 my_toplabel.pack(pady=10, in_=top)
 
-# Set and post calendar
+# Set and post date entry fields (first set to 1 week past, second to current date)
 calone = DateEntry(root, width=12, background='darkblue',
-                   foreground='white', borderwidth=2)
+                   foreground='white', borderwidth=2, year=last_week.year, month=last_week.month, day=last_week.day)
 calone.pack(in_=top, side=LEFT, padx=20, pady=10)
 
 caltwo = DateEntry(root, width=12, background='darkblue',
