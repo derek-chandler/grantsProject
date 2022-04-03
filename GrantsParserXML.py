@@ -208,10 +208,6 @@ bottom = Frame(root, width=100)
 top.pack(side=TOP)
 bottom.pack(side=BOTTOM, fill=None, expand=False)
 
-# Set curent datetime to user's computer time
-d = datetime.date.today()
-userdate = ""
-
 # Sets padding and text of UI Label
 my_toplabel = Label(root, text="Please select a date range")
 my_toplabel.pack(pady=10, in_=top)
@@ -232,7 +228,7 @@ def grab_date():
     userdateone = calone.get_date()
     userdatetwo = caltwo.get_date()
     if userdateone > userdatetwo:
-        messagebox.showerror("uhoh", "bad guy!")
+        messagebox.showerror("Improper Date Range", "Please ensure your first date is before your second date")
     else: root.destroy()
 
 
