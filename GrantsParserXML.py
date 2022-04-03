@@ -334,7 +334,7 @@ doc = docx.Document("templet.docx")
 bookmark_list = list()
 
 #! change text in paragraph 9 to the number of grants
-doc.paragraphs[9].text = str(date.today().strftime("%B %d, %Y"))
+doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
 
 #! Set pointer to equal paragraph 11
 paracount = 11
@@ -345,7 +345,9 @@ for agency in agencyList:
     word.insert_paragraph_after(pointer, agency)
     paracount += 1
     pointer = doc.paragraphs[paracount]
-    
+
+#! Add Header to start of Grants sections
+
 line = doc.add_paragraph()
 line.alignment = WD_ALIGN_PARAGRAPH.CENTER
 run = line.add_run("\nGrants\n")
