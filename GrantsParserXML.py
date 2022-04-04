@@ -386,7 +386,7 @@ for agency  in agencyList:
         paragraph_format = paragraph.paragraph_format
         paragraph_format.line_spacing = 1.0
 
-        paragraph.add_run(f"\nAgency Name: {i.opportunityTitle}").bold = True
+        paragraph.add_run(f"\nAgency Name: {i.agencyName}").bold = True
         paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}").bold = True
         paragraph.add_run(f"\nPost Date: {i.postDate}").bold = True
         paragraph.add_run(f"\nDue Date {i.dueDate}").bold = True
