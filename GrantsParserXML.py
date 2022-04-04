@@ -336,15 +336,16 @@ bookmark_list = list()
 #! change text in paragraph 9 to the number of grants
 doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
 
-#! Set pointer to equal paragraph 11
-paracount = 11
-pointer = doc.paragraphs[paracount]
 
-#! Build the table of contents first
-for agency in agencyList:
-    word.insert_paragraph_after(pointer, agency)
-    paracount += 1
-    pointer = doc.paragraphs[paracount]
+
+# #! Build the table of contents first
+# for agency in agencyList:
+#     word.insert_paragraph_after(pointer, agency)
+#     paracount += 1
+#     pointer = doc.paragraphs[paracount]
+
+#! Random paragraph object to position the start of the hyperlink prints
+spacerpara = doc.add_paragraph()
 
 #! Add Header to start of Grants sections
 
@@ -357,6 +358,11 @@ font.size = Pt(22)
 font.name = 'Times New Roman'
 font.underline = True
 
+#! Set pointer to equal paragraph 11
+paracount = 12
+pointer = doc.paragraphs[paracount]
+
+#! Add paragraph
 
 #! This prints generates the bookmarks
 for agency  in agencyList:
@@ -366,6 +372,10 @@ for agency  in agencyList:
     paragraph_format.line_spacing = 1.0
     word.add_bookmark(paragraph, agency, f"{agency} bookmark")
     bookmark_list.append(paragraph)
+
+    word.insert_paragraph_after(pointer, word.add_link(pointer, f"{agency} bookmark".replace(" ","_"), agency))
+    paracount += 1
+    pointer = doc.paragraphs[paracount]
 
     grantDictionary[agency].sort(key=lambda x: x.dueDate)
 
@@ -397,13 +407,13 @@ for agency  in agencyList:
         paragraph.add_run(f"\n\n")
 
 
-for index, bookmark in enumerate(bookmark_list):
-    """_summary_
+# for index, bookmark in enumerate(bookmark_list):
+#     """_summary_
 
-    Args:
-        bookmarkinenumerate (_type_): _description_
-    """
-    word.add_link(bookmark, agencyList[index], f"{agencyList[index]} link")
+#     Args:
+#         bookmarkinenumerate (_type_): _description_
+#     """
+#     word.add_link(bookmark, agencyList[index], f"{agencyList[index]} link")
 
     # # table_of_content = doc.paragraphs[11].add_run(f"{agency}")
     # table_of_content = doc.paragraphs[11]
