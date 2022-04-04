@@ -426,4 +426,6 @@ for agency  in agencyList:
 
 #     print(i.awardCeiling)
 
-doc.save("sample.docx")
+
+
+doc.save(f"GrantsReport_{today}.docx")
