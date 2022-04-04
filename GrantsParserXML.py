@@ -285,8 +285,8 @@ for opportunity in myroot:
             agencyName=getOpportunityInfo(opportunity, 'AgencyName'),
             opportunityTitle=html.unescape(
                 getOpportunityInfo(opportunity, 'OpportunityTitle')),
-            postDate=getOpportunityInfo(opportunity, 'PostDate'),
-            dueDate=getOpportunityInfo(opportunity, 'DueDate'),
+            postDate= dateStringVersion(getOpportunityInfo(opportunity, 'PostDate')),
+            dueDate= dateStringVersion(getOpportunityInfo(opportunity, 'CloseDate')),
             numAwards=getOpportunityInfo(opportunity, 'NumberOfAwards'),
             totalFunding=getOpportunityInfo(opportunity, 'TotalFunding'),
             awardCeiling=getOpportunityInfo(opportunity, 'AwardCeiling'),
@@ -389,7 +389,7 @@ for agency  in agencyList:
         paragraph.add_run(f"\nAgency Name: {i.agencyName}").bold = True
         paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}").bold = True
         paragraph.add_run(f"\nPost Date: {i.postDate}").bold = True
-        paragraph.add_run(f"\nDue Date {i.dueDate}").bold = True
+        paragraph.add_run(f"\nDue Date: {i.dueDate}").bold = True
         paragraph.add_run(f"\nExpected Number of awards: {i.numAwards}").bold = True
         paragraph.add_run(f"\nEstimated total program funding: {i.totalFunding}").bold = True
         paragraph.add_run(f"\nAward Ceiling: {i.awardCeiling}").bold = True
