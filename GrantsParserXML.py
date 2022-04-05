@@ -118,6 +118,12 @@ def generateLink(grantID):
     link =(f"https://www.grants.gov/web/grants/view-opportunity.html?oppId={grantID}")
     return link
 
+# function to reduce the number of words for a string
+# will help to reduce the number of words in the description
+def wordLimiter(string, limit):
+    string = string.split()[:limit]
+    string = " ".join(string) + "..."
+    return string
 
 # create table of unique agencies (want to improve this, lot of redudancies related
 # to multiple instances of the same agency with additional information)
@@ -300,7 +306,7 @@ for opportunity in myroot:
             awardCeiling=getOpportunityInfo(opportunity, 'AwardCeiling'),
             awardFloor=getOpportunityInfo(opportunity, 'AwardFloor'),
             oppNumber=getOpportunityInfo(opportunity, 'OpportunityNumber'),
-            description=html.unescape(getOpportunityInfo(opportunity, 'Description')),
+            description = html.unescape(getOpportunityInfo(opportunity, 'Description')),
             eligApplicants=getOpportunityInfo(opportunity, 'EligibleApplicants'),
             grantLink =generateLink(getOpportunityInfo(opportunity, 'OpportunityID'))
         )
