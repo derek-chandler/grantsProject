@@ -112,6 +112,12 @@ def generateAgencyName(agencyCode):
 
     return agencyCode
 
+# function to generate link to grant from grant ID
+def generateLink(grantID):
+    
+    link =(f"https://www.grants.gov/web/grants/view-opportunity.html?oppId={grantID}")
+    return link
+
 
 # create table of unique agencies (want to improve this, lot of redudancies related
 # to multiple instances of the same agency with additional information)
@@ -139,7 +145,7 @@ def getOpportunityInfo(opportunity, attribute):
 class Grant:
 
     def __init__(self, agencyCode, agencyName, opportunityTitle, postDate, dueDate, numAwards,
-                 totalFunding, awardCeiling, awardFloor, oppNumber, description, eligApplicants='N/A'):
+                 totalFunding, awardCeiling, awardFloor, oppNumber, description, grantLink, eligApplicants='N/A'):
 
         self.agencyCode = agencyCode
         self.distinctAgency = generateAgencyName(agencyCode)
@@ -154,6 +160,7 @@ class Grant:
         self.oppNumber = oppNumber
         self.description = description
         self.eligApplicants = eligApplicants
+        self.grantLink = grantLink
 
 # ********************************************MAIN FUNCTIONS*****************************************************************
 
@@ -173,6 +180,8 @@ def printGrant(grant):
     print("Purpose: " + grant.description)
     print()
     print("Eligible applicants: " + grant.eligApplicants)
+    print()
+    print("Link: " + grant.grantLink)
 
     print()
 
@@ -295,7 +304,8 @@ for opportunity in myroot:
             description=html.unescape(
                 getOpportunityInfo(opportunity, 'Description')),
             eligApplicants=getOpportunityInfo(
-                opportunity, 'EligibleApplicants')
+                opportunity, 'EligibleApplicants'),
+            grantLink =generateLink(getOpportunityInfo(opportunity, 'OpportunityID'))
         )
         tableOfContents(agencyList, grant.distinctAgency)
         # Create a grant object
@@ -329,6 +339,7 @@ for gr in grantDictionary['National Science Foundation']:
      print('**********************************************************************************************************')
      printGrant(gr)
 '''
+
 #! Opens the word templet file
 doc = docx.Document("templet.docx")
 
