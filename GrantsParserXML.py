@@ -292,8 +292,7 @@ for opportunity in myroot:
         grant = Grant(
             agencyCode=getOpportunityInfo(opportunity, 'AgencyCode'),
             agencyName=getOpportunityInfo(opportunity, 'AgencyName'),
-            opportunityTitle=html.unescape(
-                getOpportunityInfo(opportunity, 'OpportunityTitle')),
+            opportunityTitle=html.unescape(getOpportunityInfo(opportunity, 'OpportunityTitle')),
             postDate= dateStringVersion(getOpportunityInfo(opportunity, 'PostDate')),
             dueDate= dateStringVersion(getOpportunityInfo(opportunity, 'CloseDate')),
             numAwards=getOpportunityInfo(opportunity, 'NumberOfAwards'),
@@ -301,10 +300,8 @@ for opportunity in myroot:
             awardCeiling=getOpportunityInfo(opportunity, 'AwardCeiling'),
             awardFloor=getOpportunityInfo(opportunity, 'AwardFloor'),
             oppNumber=getOpportunityInfo(opportunity, 'OpportunityNumber'),
-            description=html.unescape(
-                getOpportunityInfo(opportunity, 'Description')),
-            eligApplicants=getOpportunityInfo(
-                opportunity, 'EligibleApplicants'),
+            description=html.unescape(getOpportunityInfo(opportunity, 'Description')),
+            eligApplicants=getOpportunityInfo(opportunity, 'EligibleApplicants'),
             grantLink =generateLink(getOpportunityInfo(opportunity, 'OpportunityID'))
         )
         tableOfContents(agencyList, grant.distinctAgency)
@@ -359,6 +356,9 @@ doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
 #! Random paragraph object to position the start of the hyperlink prints
 spacerpara = doc.add_paragraph()
 
+#! Add page break
+doc.add_page_break()
+
 #! Add Header to start of Grants sections
 
 line = doc.add_paragraph()
@@ -408,6 +408,7 @@ for agency  in agencyList:
         paragraph.add_run(f"\nAward Floor: {i.awardFloor}").bold = True
         paragraph.add_run(f"\nFunding Opportunity Number: {i.oppNumber}").bold = True
 
+
         run = paragraph.add_run(f"\n\nPurpose: {i.description}")
         font = run.font
         font.size = Pt(12)
@@ -416,7 +417,12 @@ for agency  in agencyList:
 
 
         paragraph.add_run(f"\n\nEligible Applicants: {i.eligApplicants}").bold = True
-        paragraph.add_run(f"\n\n")
+        paragraph.add_run(f"\n")
+
+        #! Add hyperlink to grant
+        link_para = doc.add_paragraph()
+        word.add_hyperlink(link_para, f"{i.grantLink}\n", i.grantLink)
+
 
 
 # for index, bookmark in enumerate(bookmark_list):
