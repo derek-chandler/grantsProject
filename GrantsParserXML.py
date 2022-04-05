@@ -346,7 +346,6 @@ for gr in grantDictionary['National Science Foundation']:
 #! Opens the word templet file
 doc = docx.Document("templet.docx")
 
-bookmark_list = list()
 
 #! change text in paragraph 9 to the number of grants
 doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
@@ -389,7 +388,6 @@ for agency  in agencyList:
     paragraph_format = paragraph.paragraph_format
     paragraph_format.line_spacing = 1.0
     word.add_bookmark(paragraph, agency, f"{agency} bookmark")
-    bookmark_list.append(paragraph)
 
     word.insert_paragraph_after(pointer, word.add_link(pointer, f"{agency} bookmark".replace(" ","_"), agency))
     paracount += 1
