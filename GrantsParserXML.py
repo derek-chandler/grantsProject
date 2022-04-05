@@ -161,9 +161,9 @@ def printGrant(grant):
     print("Agency name:                     " + grant.agencyName)
     print("Opportunity title:               " + grant.opportunityTitle)
     print("Post date:                       " +
-          dateStringVersion(grant.postDate))
+          grant.postDate)
     print("Due date:                        " +
-          dateStringVersion(grant.dueDate))
+          grant.dueDate)
     print("Expected Number of awards:       " + grant.numAwards)
     print("Estimated total program funding: " + addCommasAndDollarSign(grant.totalFunding))
     print("Award Ceiling:                   " + addCommasAndDollarSign(grant.awardCeiling))
@@ -251,7 +251,7 @@ root.mainloop()
 
 # Convert datetime object to string for comparison
 dateRangeOne = userdateone.strftime("%Y%m%d")
-dateRangeTwo = userdateone.strftime("%Y%m%d")
+dateRangeTwo = userdatetwo.strftime("%Y%m%d")
 print(dateRangeTwo, dateRangeOne)
 
 # --------------------------- UI END ---------------------------
@@ -319,15 +319,16 @@ agencyList.sort()
 # for x in agencyList:
 #     print(x)
 
-# # Using the grantDictionary, print out each grant for Department of Education key
-# print('----------------------------------------------------------------------')
-# print()
-# print('ALL DEPARTMENT OF EDUCATION GRANTS')
-# print()
-# for gr in grantDictionary['Department of Education']:
-#     print('**********************************************************************************************************')
-#     printGrant(gr)
-
+'''
+ # Using the grantDictionary, print out each grant for Department of Education key
+print('----------------------------------------------------------------------')
+print()
+print('ALL NSF GRANTS')
+print()
+for gr in grantDictionary['National Science Foundation']:
+     print('**********************************************************************************************************')
+     printGrant(gr)
+'''
 #! Opens the word templet file
 doc = docx.Document("templet.docx")
 
