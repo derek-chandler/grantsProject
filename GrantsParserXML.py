@@ -387,11 +387,14 @@ for agency  in agencyList:
     paragraph = doc.add_paragraph()
     paragraph_format = paragraph.paragraph_format
     paragraph_format.line_spacing = 1.0
-    word.add_bookmark(paragraph, agency, f"{agency} bookmark")
+    bookmark_para = word.add_bookmark(paragraph, agency, f"{agency} bookmark")
 
     word.insert_paragraph_after(pointer, word.add_link(pointer, f"{agency} bookmark".replace(" ","_"), agency))
     paracount += 1
     pointer = doc.paragraphs[paracount]
+    
+    #! Change font of bookmark_para to 16
+    
 
     grantDictionary[agency].sort(key=lambda x: x.dueDate)
 

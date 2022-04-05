@@ -4,10 +4,15 @@ from docx.enum.dml import MSO_THEME_COLOR_INDEX
 from docx.shared import Length
 from docx.text.paragraph import Paragraph
 from docx.oxml.xmlchemy import OxmlElement
+from docx.shared import Pt
 
 
 def add_bookmark(paragraph, bookmark_text, bookmark_name):
     run = paragraph.add_run()
+    run.bold = True
+    font = run.font
+    font.size = Pt(16)
+    font.underline = True
     tag = run._r
     start = docx.oxml.shared.OxmlElement('w:bookmarkStart')
     start.set(docx.oxml.ns.qn('w:id'), '0')
