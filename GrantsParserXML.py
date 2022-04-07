@@ -344,7 +344,7 @@ for gr in grantDictionary['National Science Foundation']:
 '''
 
 #! Opens the word templet file
-doc = docx.Document("templet.docx")
+doc = docx.Document("OpsWatch template.docx")
 
 
 #! change text in paragraph 9 to the number of grants
