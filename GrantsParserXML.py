@@ -350,14 +350,6 @@ doc = docx.Document("OpsWatch template.docx")
 #! change text in paragraph 9 to the number of grants
 doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
 
-
-
-# #! Build the table of contents first
-# for agency in agencyList:
-#     word.insert_paragraph_after(pointer, agency)
-#     paracount += 1
-#     pointer = doc.paragraphs[paracount]
-
 #! Random paragraph object to position the start of the hyperlink prints
 spacerpara = doc.add_paragraph()
 
@@ -398,7 +390,7 @@ for index, agency  in enumerate(agencyList):
 
     grantDictionary[agency].sort(key=lambda x: x.dueDate)
 
-    # Loop over each grant in the dictionary
+    #! Loop over each grant in the dictionary
     grant_list = grantDictionary.get(agency)
     for i in grant_list:
         paragraph = doc.add_paragraph()
@@ -429,28 +421,7 @@ for index, agency  in enumerate(agencyList):
         #! Add hyperlink to grant
         link_para = doc.add_paragraph()
         word.add_hyperlink(link_para, f"{i.grantLink}\n", i.grantLink)
-
-
-
-# for index, bookmark in enumerate(bookmark_list):
-#     """_summary_
-
-#     Args:
-#         bookmarkinenumerate (_type_): _description_
-#     """
-#     word.add_link(bookmark, agencyList[index], f"{agencyList[index]} link")
-
-    # # table_of_content = doc.paragraphs[11].add_run(f"{agency}")
-    # table_of_content = doc.paragraphs[11]
-    # toc = doc.add_paragraph(agency)
-    # table_of_content.insert_paragraph_after(toc)
-
-
-
-# for i in grantDictionary["Agency for International Development"]:
-
-#     print(i.awardCeiling)
-
-
+    
+    doc.add_page_break()
 
 doc.save(f"GrantsReport_{today}.docx")
