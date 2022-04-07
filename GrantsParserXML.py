@@ -114,7 +114,7 @@ def generateAgencyName(agencyCode):
 
 # function to generate link to grant from grant ID
 def generateLink(grantID):
-    
+
     link =(f"https://www.grants.gov/web/grants/view-opportunity.html?oppId={grantID}")
     return link
 
@@ -333,14 +333,14 @@ agencyList.sort()
 #     print(x)
 
 '''
- # Using the grantDictionary, print out each grant for Department of Education key
+# Using the grantDictionary, print out each grant for Department of Education key
 print('----------------------------------------------------------------------')
 print()
 print('ALL NSF GRANTS')
 print()
 for gr in grantDictionary['National Science Foundation']:
-     print('**********************************************************************************************************')
-     printGrant(gr)
+print('**********************************************************************************************************')
+printGrant(gr)
 '''
 
 #! Opens the word templet file
@@ -382,19 +382,19 @@ pointer = doc.paragraphs[paracount]
 #! Add paragraph
 
 #! This prints generates the bookmarks
-for agency  in agencyList:
+for index, agency  in enumerate(agencyList):
 
     paragraph = doc.add_paragraph()
     paragraph_format = paragraph.paragraph_format
     paragraph_format.line_spacing = 1.0
-    bookmark_para = word.add_bookmark(paragraph, agency, f"{agency} bookmark")
+    bookmark_para = word.add_bookmark(paragraph, agency, f"bookmark{str(index)}")
 
-    word.insert_paragraph_after(pointer, word.add_link(pointer, f"{agency} bookmark".replace(" ","_"), agency))
+    word.insert_paragraph_after(pointer, word.add_link(pointer, f"bookmark{str(index)}", agency))
     paracount += 1
     pointer = doc.paragraphs[paracount]
-    
+
     #! Change font of bookmark_para to 16
-    
+
 
     grantDictionary[agency].sort(key=lambda x: x.dueDate)
 
