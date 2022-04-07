@@ -5,9 +5,11 @@ from docx.shared import Length
 from docx.text.paragraph import Paragraph
 from docx.oxml.xmlchemy import OxmlElement
 from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 
 def add_bookmark(paragraph, bookmark_text, bookmark_name):
+    paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = paragraph.add_run()
     run.bold = True
     font = run.font
