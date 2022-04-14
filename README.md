@@ -20,11 +20,15 @@ Once the program finishes, **sample.docx** will be generated in the program's ro
 If you wish to generate another report, please rename or move **sample.docx** from the program's root directory
 
 ##overview
+
 ###GrantDownloader.py
 sdfsd
+
 ###GrantParser.py
 sdfsd
+
 ###GrantParserXML.py
 sdfsd
+
 ###word.py
 sdfsd
