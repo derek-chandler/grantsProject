@@ -10,6 +10,7 @@ import word
 import docx
 from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+import threading
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -252,6 +253,19 @@ def grab_date():
         messagebox.showerror("Improper Date Range", "Please ensure your first date is before your second date")
     else: root.destroy()
 
+# Function for usage in multithreading of grantdownloader.py
+def downloadxml():
+    global mytree
+    mytree = et.parse(GrantDownloader.get())
+
+# Set what function other thread will execute
+th = threading.Thread(target=downloadxml)
+
+# Begin multithread download on UI load
+th.start()
+
+userdateone = calone.get_date()
+userdatetwo = caltwo.get_date()
 
 # Button Grabs selected dates then closes if userdateone > userdatetwo
 my_button = Button(root, text="Confirm", activebackground='gray', command=grab_date)
@@ -267,12 +281,17 @@ root.mainloop()
 # Convert datetime object to string for comparison
 dateRangeOne = userdateone.strftime("%Y%m%d")
 dateRangeTwo = userdatetwo.strftime("%Y%m%d")
+
+# Print date range to console
 print(dateRangeTwo, dateRangeOne)
 
 # --------------------------- UI END ---------------------------
 
+# Waits for both threads to finish their execution before continuing
+th.join()
+
 # Store the root element of this file
-myroot = mytree.getroot()
+# myroot = mytree.getroot()
 
 # Count the number of grants that we have chosen to print,
 count = 0
