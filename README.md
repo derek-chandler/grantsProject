@@ -1,4 +1,7 @@
 # grantsProject
+## Description
+This project is for generating grant reports based off the data downloaded off grants.gov. The user specifies the date-range of grants that they wish to browse though, then the program will generate word documents based off their preferences. 
+
 ## Requirements
  * [Python 3.10](https://www.python.org/downloads/) or above
  * All python packages in [requirements.txt](https://github.com/derek-chandler/grantsProject/blob/main/requirements.txt)
