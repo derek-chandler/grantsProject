@@ -24,9 +24,6 @@ If you wish to generate another report, please rename or move **sample.docx** fr
 ### GrantDownloader.py
 sdfsd
 
-### GrantParser.py
-sdfsd
-
 ### GrantParserXML.py
 sdfsd
 
