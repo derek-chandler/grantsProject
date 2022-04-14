@@ -291,7 +291,7 @@ print(dateRangeTwo, dateRangeOne)
 th.join()
 
 # Store the root element of this file
-# myroot = mytree.getroot()
+myroot = mytree.getroot()
 
 # Count the number of grants that we have chosen to print,
 count = 0
