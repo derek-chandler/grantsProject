@@ -363,7 +363,7 @@ printGrant(gr)
 '''
 
 #! Opens the word templet file
-doc = docx.Document("OpsWatch template.docx")
+doc = docx.Document("templet.docx")
 
 
 #! change text in paragraph 9 to the number of grants
@@ -418,13 +418,13 @@ for index, agency  in enumerate(agencyList):
 
         paragraph.add_run(f"\nAgency Name: {i.agencyName}").bold = True
         paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}").bold = True
-        paragraph.add_run(f"\nPost Date: {i.postDate}").bold = True
-        paragraph.add_run(f"\nDue Date: {i.dueDate}").bold = True
-        paragraph.add_run(f"\nExpected Number of awards: {i.numAwards}").bold = True
-        paragraph.add_run(f"\nEstimated total program funding: {i.totalFunding}").bold = True
-        paragraph.add_run(f"\nAward Ceiling: {i.awardCeiling}").bold = True
-        paragraph.add_run(f"\nAward Floor: {i.awardFloor}").bold = True
-        paragraph.add_run(f"\nFunding Opportunity Number: {i.oppNumber}").bold = True
+        paragraph.add_run(f"\nPost Date:\t\t\t\t\t\t{i.postDate}").bold = True
+        paragraph.add_run(f"\nDue Date:\t\t\t\t\t\t{i.dueDate}").bold = True
+        paragraph.add_run(f"\nExpected Number of awards:\t\t\t{i.numAwards}").bold = True
+        paragraph.add_run(f"\nEstimated total program funding:\t\t{i.totalFunding}").bold = True
+        paragraph.add_run(f"\nAward Ceiling:\t\t\t\t\t{i.awardCeiling}").bold = True
+        paragraph.add_run(f"\nAward Floor:\t\t\t\t\t{i.awardFloor}").bold = True
+        paragraph.add_run(f"\nFunding Opportunity Number:\t\t\t{i.oppNumber}").bold = True
 
 
         run = paragraph.add_run(f"\n\nPurpose: {i.description}")
