@@ -22,37 +22,37 @@ If you wish to generate another report, please rename or move **sample.docx** fr
 ## overview
 ### Used Libraries
 * xml.etree.ElementTree as et
-
+    * Stuff
 
 * html as html
-
+    * Stuff
 
 * tkinter import *
-
+    * Stuff
 
 * tkinter import messagebox
-
+    * Stuff
 
 * tkcalendar import DateEntry
-
+    * Stuff
 
 * os
-
+    * Stuff
 
 * datetime
-
+    * Stuff
 
 * word
-
+    * Stuff
 
 * docx
-
+    * Stuff
 
 * docx.shared import Pt
-
+    * Stuff
 
 * docx.enum.text import WD_ALIGN_PARAGRAPH
-
+    * Stuff
 
 * threading
     * Stuff
@@ -103,7 +103,18 @@ sdfsd
 * Calls to the GrantDownloader.py for it to begin downloading and parsing of the zipped XML. More information of the GrantDownloader.py can be found above in the GrantDownloader.py section.
 
 *UI Begin*
-* 
+* Contains all UI Elements used for user to select date range of the grant report
+* UI uses variable today and variable last_week to automatically select the default date range of the past 7 days
+* Basic Settings defines the opening root of the tkinter UI panel as well as some settings such as the program title (root.title), UI Panel Icon (.ico for windows, .xbm for linux), and panel size (root.geometry)
+* Line 227 - 231 defines the format of the UI frame, setting a "TOP" and "BOTTOM" of the UI panel in order to divide the placement of the ui elements
+* my_toplabel sets a label value at the top of the UI panel while the .pack addition allows for the label to have padding and be placed within the top of the UI
+* DateEntry fields set the two entry fiels with a popup calendar alongside the parameters of the calendar
+* def grab_date collects the user's selected date from the DateEntry panels and sets an error popup if the user selects an improper date range (if the first date is AFTER the second date)
+* def downloadxml is used within the multithreading in order to allow the XML download / unzip to run alongside the UI
+* threading is used to run downloadxml and ensure both processes end before merging.
+* my_button holds the parameters of the confirm button
+* Line 279 ends the UI loop
+* dateRangeOne and Two converts the date format of the DateEntry to a date.time object to a string using strftime
 
 *Misc*
 * Stuff
