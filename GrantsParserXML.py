@@ -427,7 +427,11 @@ for index, agency  in enumerate(agencyList):
         paragraph.add_run(f"\nFunding Opportunity Number:\t\t\t{i.oppNumber}").bold = True
 
 
-        run = paragraph.add_run(f"\n\nPurpose: {i.description}")
+        run = paragraph.add_run(f"\n\nPurpose: ")
+        run.bold = True
+        run.italic = True
+
+        run = paragraph.add_run(f"{i.description}")
         font = run.font
         font.size = Pt(12)
         font.italic = True
