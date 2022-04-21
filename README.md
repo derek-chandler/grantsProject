@@ -29,22 +29,34 @@ sdfsd
 * Stuff
 
 *Agency Storage*
-* Stuff
+* Agencies are stored within a dictionary that uses agency code as a key (Line 15 - Line 48)
+* If new agencies are ever added, or an agency does not fit within this dictionary, they will be placed within the N/A - Other Agencies field until this new agency is added to the dictionary.
+* Line 50 - 53 defines a variable that just automates the begining of the link for each opportunity
 
 *DEF*
-* Stuff
+* Line 55 - 150, stores most of our used methods
+* dateConversion converts our dates into a proper format for the printed report
+* dateStringVersion converts our dates into a word based format for the printed report
+* addCommasAndDollarSign converts monetary amounts to have commas
+* dateHierarchyForm converts dates into a YYYMMDD format so earlier dates are smaller numbers for use in the UI output
+* generateAgencyName takes an agency code and gets the name of the agency from our dictionary
+* generateLink generates a link to the grant from Grants.gov using the grantID
+* wordLimiter allows you to limit the amount of words within the description of the grant report
+* tableOfContents creates a table of agencies for use in the printed grant report
+* getOpportunityInfo returns an attribute of interest from a given opportunity
 
 *MAIN Object*
-* Stuff
+* Defines class Grant and init as well as all printed parameters in the grant report (IE Agency Code, Agency Name, etc)
 
 *MAIN Functions*
-* Stuff
+* Defines the parameters printed in each individual grant report
+* Defines grantDictionaryAdd that creates a dictionary using the distinctAgency as a key and the grants as values
 
 *Driver_Code*
-* Stuff
+* Calls to the GrantDownloader.py for it to begin downloading and parsing of the zipped XML. More information of the GrantDownloader.py can be found above in the GrantDownloader.py section.
 
 *UI Begin*
-* Stuff
+* 
 
 *Misc*
 * Stuff
