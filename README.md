@@ -20,13 +20,60 @@ Once the program finishes, **sample.docx** will be generated in the program's ro
 If you wish to generate another report, please rename or move **sample.docx** from the program's root directory
 
 ## overview
+### Used Libraries
+* xml.etree.ElementTree as et
+
+
+* html as html
+
+
+* tkinter import *
+
+
+* tkinter import messagebox
+
+
+* tkcalendar import DateEntry
+
+
+* os
+
+
+* datetime
+
+
+* word
+
+
+* docx
+
+
+* docx.shared import Pt
+
+
+* docx.enum.text import WD_ALIGN_PARAGRAPH
+
+
+* threading
+** Stuff
 
 ### GrantDownloader.py
 sdfsd
 
 ### GrantParserXML.py
 *Imported Libraries*
-* Stuff
+* xml.etree.ElementTree as et
+* html as html
+* tkinter import *
+* tkinter import messagebox
+* tkcalendar import DateEntry
+* os
+* datetime
+* word
+* docx
+* docx.shared import Pt
+* docx.enum.text import WD_ALIGN_PARAGRAPH
+* threading
 
 *Agency Storage*
 * Agencies are stored within a dictionary that uses agency code as a key (Line 15 - Line 48)
