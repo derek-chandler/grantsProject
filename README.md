@@ -26,21 +26,28 @@ sdfsd
 
 ### GrantParserXML.py
 *Imported Libraries*
-- Stuff
+* Stuff
+
 *Agency Storage*
-- Stuff
+* Stuff
+
 *DEF*
-- Stuff
+* Stuff
+
 *MAIN Object*
-- Stuff
+* Stuff
+
 *MAIN Functions*
-- Stuff
+* Stuff
+
 *Driver_Code*
-- Stuff
+* Stuff
+
 *UI Begin*
-- Stuff
+* Stuff
+
 *Misc*
-- Stuff
+* Stuff
 
 ### word.py
 sdfsd
