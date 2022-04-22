@@ -78,7 +78,6 @@ def add_hyperlink(paragraph, text, url):
     # Delete this if using a template that has the hyperlink style in it
     r.font.color.theme_color = MSO_THEME_COLOR_INDEX.HYPERLINK
     r.font.underline = True
-
     return hyperlink
 
 def insert_paragraph_after(paragraph, text=None, style=None):
@@ -86,6 +85,7 @@ def insert_paragraph_after(paragraph, text=None, style=None):
     new_p = OxmlElement("w:p")
     paragraph._p.addnext(new_p)
     new_para = Paragraph(new_p, paragraph._parent)
+
     if text:
         new_para.add_run(text)
     if style is not None:

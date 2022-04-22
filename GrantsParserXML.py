@@ -370,7 +370,9 @@ doc = docx.Document("OpsWatch template.docx")
 doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
 
 #! Random paragraph object to position the start of the hyperlink prints
-spacerpara = doc.add_paragraph()
+spacerpara = doc.add_paragraph("\n")
+paragraph_format = spacerpara.paragraph_format
+paragraph_format.line_spacing = 1.0
 
 #! Add page break
 doc.add_page_break()
@@ -390,28 +392,56 @@ font.underline = True
 paracount = 12
 pointer = doc.paragraphs[paracount]
 
-#! Add paragraph
+#! Check if it's a new agency
+agency_check = set()
+agency_name_check = set()
 
 #! This prints generates the bookmarks
 for index, agency  in enumerate(agencyList):
-
-    paragraph = doc.add_paragraph()
-    paragraph_format = paragraph.paragraph_format
-    paragraph_format.line_spacing = 1.0
-    bookmark_para = word.add_bookmark(paragraph, agency, f"bookmark{str(index)}")
-
-    word.insert_paragraph_after(pointer, word.add_link(pointer, f"bookmark{str(index)}", agency))
-    paracount += 1
-    pointer = doc.paragraphs[paracount]
-
-    #! Change font of bookmark_para to 16
-
 
     grantDictionary[agency].sort(key=lambda x: x.dueDate)
 
     #! Loop over each grant in the dictionary
     grant_list = grantDictionary.get(agency)
     for i in grant_list:
+
+        if agency not in agency_check:
+            agency_check.add(agency)
+            paragraph = doc.add_paragraph()
+            paragraph_format = paragraph.paragraph_format
+            paragraph_format.line_spacing = 1.0
+            bookmark_para = word.add_bookmark(paragraph, agency, f"bookmark{str(index)}")
+
+
+            paragraph_format = pointer.paragraph_format
+            paragraph_format.line_spacing = 1.0
+            word.insert_paragraph_after(pointer, word.add_link(pointer, f"bookmark{str(index)}", agency))
+            paracount += 1
+            pointer = doc.paragraphs[paracount]
+
+        if i.agencyName not in agency_name_check:
+            agency_name_check.add(i.agencyName)
+
+            paragraph_format = pointer.paragraph_format
+            paragraph_format.line_spacing = 1.0
+            word.insert_paragraph_after(pointer, i.agencyName)
+            paracount += 1
+            pointer = doc.paragraphs[paracount]
+
+            paragraph_format = pointer.paragraph_format
+            paragraph_format.line_spacing = 1.0
+            word.insert_paragraph_after(pointer, f"\t• {i.opportunityTitle}")
+            paracount += 1
+            pointer = doc.paragraphs[paracount]
+
+        else:
+            paragraph_format = pointer.paragraph_format
+            paragraph_format.line_spacing = 1.0
+            word.insert_paragraph_after(pointer, f"\t• {i.opportunityTitle}")
+            paracount += 1
+            pointer = doc.paragraphs[paracount]
+
+
         paragraph = doc.add_paragraph()
         paragraph_format = paragraph.paragraph_format
         paragraph_format.line_spacing = 1.0
@@ -444,7 +474,13 @@ for index, agency  in enumerate(agencyList):
         #! Add hyperlink to grant
         link_para = doc.add_paragraph()
         word.add_hyperlink(link_para, f"{i.grantLink}\n", i.grantLink)
-    
-    doc.add_page_break()
+
+    else:
+        #! Random paragraph object to position the start of the next agency name better
+        paragraph_format.line_spacing = 1.0
+        word.insert_paragraph_after(pointer, "\n")
+        paracount += 1
+        pointer = doc.paragraphs[paracount]
+        doc.add_page_break()
 
 doc.save(f"GrantsReport_{today}.docx")
