@@ -151,7 +151,7 @@ def get():
         print("zip file exists, unzipping...", end="")
         unzip_xml(zip_path)
         print("done")
-        return zip_path
+        return xml_path
     print("does not exist\ndownloading...")
 
     ########################################################
