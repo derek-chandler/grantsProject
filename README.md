@@ -116,6 +116,12 @@ sdfsd
 * Line 279 ends the UI loop
 * dateRangeOne and Two converts the date format of the DateEntry to a date.time object to a string using strftime
 
+*XML Parsing/Grant Generation*
+* Creates xmltree object to store the xml information
+* Declare a list of agency names (agencyList) and a dictionary to store all grants (grantDictionary)
+* Iterate through all grants in the xmltree structure, and create grants objects out of the grants with <PostDate> values between the given date range, inclusive. In this loop, we will also call tableOfConents method to add only unique distinctAgency names to agencyList and add any new grant to grantDictionary
+* Once the loop ends, we will sort agencyList in order to use it as an ordered key call for our grantDictionary
+
 *Misc*
 * Stuff
 

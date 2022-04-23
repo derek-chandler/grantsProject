@@ -293,6 +293,8 @@ print("Generating grants report...")
 # Waits for both threads to finish their execution before continuing
 th.join()
 
+###############################################################---XML Parsing/Grant Generation---#############################################################################
+
 # Store the root element of this file
 myroot = mytree.getroot()
 
@@ -355,18 +357,8 @@ agencyList.sort()
 # for x in agencyList:
 #     print(x)
 
-'''
-# Using the grantDictionary, print out each grant for Department of Education key
-print('----------------------------------------------------------------------')
-print()
-print('ALL NSF GRANTS')
-print()
-for gr in grantDictionary['National Science Foundation']:
-print('**********************************************************************************************************')
-printGrant(gr)
-'''
-
-#! Opens the word templet file
+#! Opens the word templet file, change the string to use a differnt template
+# Provided templates are templet.docx and OpsWatch template.docx
 doc = docx.Document("OpsWatch template.docx")
 
 
