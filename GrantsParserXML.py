@@ -152,7 +152,7 @@ def getOpportunityInfo(opportunity, attribute):
 class Grant:
 
     def __init__(self, agencyCode, agencyName, opportunityTitle, postDate, dueDate, numAwards,
-                 totalFunding, awardCeiling, awardFloor, oppNumber, description, grantLink, eligApplicants='N/A'):
+                 totalFunding, awardCeiling, awardFloor, oppNumber, description, grantLink, contactInfo, eligApplicants='N/A'):
 
         self.agencyCode = agencyCode
         self.distinctAgency = generateAgencyName(agencyCode)
@@ -168,6 +168,7 @@ class Grant:
         self.description = description
         self.eligApplicants = eligApplicants
         self.grantLink = grantLink
+        self.contactInfo = contactInfo
 
 # ********************************************MAIN FUNCTIONS*****************************************************************
 
@@ -187,6 +188,8 @@ def printGrant(grant):
     print("Purpose: " + grant.description)
     print()
     print("Eligible applicants: " + grant.eligApplicants)
+    print()
+    print("Contact information: " + grant.contactInfo)
     print()
     print("Link: " + grant.grantLink)
 
@@ -282,8 +285,8 @@ root.mainloop()
 dateRangeOne = userdateone.strftime("%Y%m%d")
 dateRangeTwo = userdatetwo.strftime("%Y%m%d")
 
-# Print date range to console
-print(dateRangeTwo, dateRangeOne)
+# Print message telling user that the document is being generated
+print("Generating grants report...")
 
 # --------------------------- UI END ---------------------------
 
@@ -326,8 +329,9 @@ for opportunity in myroot:
             awardFloor=getOpportunityInfo(opportunity, 'AwardFloor'),
             oppNumber=getOpportunityInfo(opportunity, 'OpportunityNumber'),
             description = html.unescape(getOpportunityInfo(opportunity, 'Description')),
-            eligApplicants=getOpportunityInfo(opportunity, 'EligibleApplicants'),
-            grantLink =generateLink(getOpportunityInfo(opportunity, 'OpportunityID'))
+            eligApplicants=html.unescape(getOpportunityInfo(opportunity, 'AdditionalInformationOnEligibility')),
+            grantLink =generateLink(getOpportunityInfo(opportunity, 'OpportunityID')),
+            contactInfo=html.unescape(getOpportunityInfo(opportunity, 'GrantorContactText'))
         )
         tableOfContents(agencyList, grant.distinctAgency)
         # Create a grant object
@@ -467,9 +471,25 @@ for index, agency  in enumerate(agencyList):
         font.italic = True
         font.name = 'Times New Roman'
 
+        # Print eligibility information
+        run = paragraph.add_run(f"\n\nEligible Applicants: ")
+        run.bold = True
 
-        paragraph.add_run(f"\n\nEligible Applicants: {i.eligApplicants}").bold = True
+        run = paragraph.add_run(f"{i.eligApplicants}")
         paragraph.add_run(f"\n")
+
+        # Print contact information if available
+        if (i.contactInfo != 'N/A'):
+            run = paragraph.add_run(f"\nContact: ")
+            run.bold = True
+            
+            
+            contactArr = i.contactInfo.split('<br/>')
+            for j in contactArr:
+                run = paragraph.add_run(f"\n{j}")
+            
+            paragraph.add_run(f"\n")
+        
 
         #! Add hyperlink to grant
         link_para = doc.add_paragraph()
