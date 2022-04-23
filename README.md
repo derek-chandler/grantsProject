@@ -80,17 +80,107 @@ sdfsd
 * If new agencies are ever added, or an agency does not fit within this dictionary, they will be placed within the N/A - Other Agencies field until this new agency is added to the dictionary.
 * Line 50 - 53 defines a variable that just automates the begining of the link for each opportunity
 
-*DEF*
-* Line 55 - 150, stores most of our used methods
-* dateConversion converts our dates into a proper format for the printed report
-* dateStringVersion converts our dates into a word based format for the printed report
-* addCommasAndDollarSign converts monetary amounts to have commas
-* dateHierarchyForm converts dates into a YYYMMDD format so earlier dates are smaller numbers for use in the UI output
-* generateAgencyName takes an agency code and gets the name of the agency from our dictionary
-* generateLink generates a link to the grant from Grants.gov using the grantID
-* wordLimiter allows you to limit the amount of words within the description of the grant report
-* tableOfContents creates a table of agencies for use in the printed grant report
-* getOpportunityInfo returns an attribute of interest from a given opportunity
+## DEF
+
+### dateConversion
+ * Description
+   * Creates date in MM/DD/YYYY format
+ * Args
+   * **date** : String of date in the form MMDDYYYY
+
+### dateStringConversion
+  * Description
+    * Creates date in Month DD, YYYY format
+    * Uses monthList to select index of month referenced in MMDDYYYY
+  * Args
+    * **date** : String of date in the form MMDDYYYY
+
+### addCommasAndDollarSign
+  * Description
+    * Adds commas and a dollar sign to strings representing money values if the value needs it
+  * Args
+    * **amountStr** : string of numbers for a money value
+  
+### dateHierarchyForm
+  * Description
+    * Converts date in MMDDYYY from to YYYYMMDD for purposes of comparison to other dates
+  * Args
+    * **date** : date to be converted to YYYYMMDD
+
+### generateAgencyName
+  * Description
+    * Takes a string representing the AgencyCode from a GrantsDBExtract XML file and derives the Agency Name from it
+    * This is derived by taking the first substring preceding a '-' in the full string
+    * Checks to see if this code corresponds to a key stored in the agencyDictionary. Returns the Agency value stored at the key if it's found, returns 'Other Agencies' if not
+  * Args
+    * **agencyCode** : string corresponding an AgencyCode from GrantsDBExtract XML file
+
+### generateLink
+  * Description
+    * Takes string corresponding to OpportunityID from a GrantsDBExtract XML file and creates a link to this grant on grants.gov by appending this string to the end of the common url
+  * Args
+    * **grantID** : string of common grants.gov url with OpportunityID
+
+### wordLimiter
+  * Description
+    * Takes a string and a number value to limit the number of words in a string delimited by white spaces
+    * Returns string with the limit number of words, and ends with elipses if the string size is reduced
+  * Args
+    * **string** : string that needs to have a limited number of words
+    * **limit** : number of words you wish the string to be below
+
+### tableOfContents
+  * Description
+    * takes string representing a distinctAgency and checks to see if it is in the list
+    * if the string is in list a, do nothing. if the string is not, add the agency to the list
+  * Args
+    * **listA** : list of agencies to which you want to attempt adding a new agency
+    * **agency** : candidate distinctAgecny string to be added to listA if it does not already exist
+
+### getOpportunityInfo
+  * Description
+    * Takes opportunity from the xml tree and returns the value corresponding to the attribute passed as an argument
+    * shortens calls to specific values in the GrantsDBExtract XML document, reducing redundant code
+  * Args
+    * **opportunity** : branch of XML tree that represents a grant opportunity
+    * **attribute** : string representing the name of an XML tag from which we want to return a value
+
+### class Grant
+
+#### def __init__
+  * Description
+    * creates a grants object to store the desired attributes
+  * Args
+    * **self** : this instantiation of a Grant object
+    * **agencyCode** : AgencyCode attribute from GrantsDBExtract XML tree
+    * **distinctAgency** : string generated using the first substring preceding a '-' character in agency code as a key to retrive the value from the set agencyDictionary
+    * **agencyName** : AgencyName attribute from GrantsDBExtract XML tree
+    * **opportunityTitle** : OpportunityTitle attribute from GrantsDBExtract XML tree
+    * **postDate** : PostDate attribute from GrantsDBExtract XML tree
+    * **dueDate** : CloseDate attribute from GrantsDBExtract XML tree
+    * **numAwards** : ExpectedNumberOfAwards attribute from GrantsDBExtract XML tree
+    * **totalFunding** : EstimatedTotalProgramFunding attribute from GrantsDBExtract XML tree
+    * **awardCeiling** : AwardCeiling attribute from GrantsDBExtract XML tree
+    * **awardFloor** : AwardFloor attribute from GrantsDBExtract XML tree
+    * **oppNumber** : OpportunityNumber attribute from GrantsDBExtract XML tree
+    * **description** : Description attribute from GrantsDBExtract XML tree
+    * **eligApplicants** : AdditionalInformationOnEligibility attribute from GrantsDBExtract XML tree
+    * **grantLink** : generated link using a common url for grants and the OpportunityID attribute from GrantsDBExtract XML tree
+    * **contactInfo** : GrantorContactText attribute from GrantsDBExtract XML tree
+
+#### printGrant
+  * Description
+    * Print stored attributes of a grant object inthe desired format
+  * Args
+    * **grant** : grant object that we would like to print
+
+#### grantDictionaryAdd
+  * Description
+    * adds Grant object to a dictionary using the distinctAgency value as a key. if a Grant shares a key with a Grant object already stored in the grantDictionary, the new Grant is stored at the same key in a list with the previous Grant
+  * Args
+    * **grantDictionary** : the dictionary of Grant objects to which you would like to add a new Grant object
+    * **grant** : Grant object you would like to add to the grantDictionary
+
 
 *MAIN Object*
 * Defines class Grant and init as well as all printed parameters in the grant report (IE Agency Code, Agency Name, etc)
