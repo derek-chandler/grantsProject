@@ -1,14 +1,15 @@
 # required libraries
 import os
 import sys
+import traceback
 import zipfile
-import wget
-import requests
-from time import sleep, time
-from bs4 import BeautifulSoup as bs
 from http.client import RemoteDisconnected
-from requests.exceptions import ConnectionError
+from time import sleep
 
+import requests
+import wget
+from bs4 import BeautifulSoup as bs
+from requests.exceptions import ConnectionError
 
 """
 get the latest zip file from grants.gov
@@ -34,9 +35,9 @@ def cleanTmp():
             if os.path.isfile(f):
                 if f.endswith(".tmp"):
                     os.remove(f)
-    except Exception as e:
+    except Exception:
         print("There was an exception while cleaning temp files in " + cwd)
-        print(e.with_traceback())
+        print(traceback.print_stack())
 
 
 # cleans old zip and XML files in cache if there is a new one
@@ -45,59 +46,61 @@ def cleanTmp():
 # as is with the rest of the script.
 def cleanOldCache(currentfilename):
     # cache directory
-    cachedir = cwd + "/cache"
+    cache_dir = os.path.join(cwd, "cache")
     # cache/extracted directory
-    xmldir = cachedir + "/extracted"
+    xml_dir = os.path.join(cache_dir, "extracted")
     # full filepath for the current cached .zip file
-    currentzip = cachedir + "/" + currentfilename + "v2.zip"
+    current_zip = os.path.join(cache_dir, currentfilename + "v2.zip")
     # full filepath for the current cached .xml file
-    currentxml = xmldir + "/" + currentfilename + "v2.xml"
+    current_xml = os.path.join(xml_dir, currentfilename + "v2.xml")
     try:
-        for filename in os.listdir(cachedir):
-            f = os.path.join(cachedir, filename)
+        for filename in os.listdir(cache_dir):
+            f = os.path.join(cache_dir, filename)
             if os.path.isfile(f):
                 # if the .zip is the latest one dont remove
-                if f == currentzip:
+                if f == current_zip:
                     continue
                 # otherwise remove if .zip
                 else:
                     os.remove(f)
-        for filename in os.listdir(xmldir):
-            f = os.path.join(xmldir, filename)
+        for filename in os.listdir(xml_dir):
+            f = os.path.join(xml_dir, filename)
             if os.path.isfile(f):
                 # if the .xml is the latest one dont remove
-                if f == currentxml:
+                if f == current_xml:
                     continue
                 # otherwise remove
                 else:
                     os.remove(f)
     except Exception as e:
-        print("There was an exception while cleaning old cache files in " + cachedir)
-        print(e.with_traceback())
+        print("There was an exception while cleaning old cache files in " + cache_dir)
+        print(traceback.print_stack())
 
 
 # unzips the file into cache/extracted
 # used in multiple places, so it's implemented as a function to save time
-def unzip_xml(filename):
-    with zipfile.ZipFile(filename, 'r') as data:
-        data.extractall("cache/extracted/")
+def unzip_xml(file_path):
+    with zipfile.ZipFile(file_path, 'r') as data:
+        data.extractall(os.path.join(cwd, "cache", "extracted"))
 
 
 # driver function using beautifulsoup4 web scraping library
-def get(_time=False):
-    if _time:
-        initial_time = time()
+def get():
     #################################################
     ## Cache directory creation/existence checking ##
     #################################################
+    # cache_dir
+    cache_dir = os.path.join(cwd, "cache")
+    extract_dir = os.path.join(cwd, "cache", "extracted")
+    # extract_dir
     # if cache folder does not exist, make it
-    if not os.path.isdir(cwd + "/cache"):
+    if not os.path.isdir(cache_dir):
         print("creating cache directory")
-        os.mkdir(cwd + "/cache")
+        os.mkdir(cache_dir)
     # if extracted folder does not exist, make it
-    if not os.path.isdir(cwd + "/cache/extracted"):
+    if not os.path.isdir(extract_dir):
         print("creating extracted directory")
-        os.mkdir(cwd + "/cache/extracted")
+        os.mkdir(extract_dir)
 
     ######################################################################
     ## Use bs4 to grab the latest filename straight from the website :) ##
@@ -113,6 +116,8 @@ def get(_time=False):
         if status == 200:
             successful = True
         else:
+            # 10 seconds is defined in https://www.grants.gov/robots.txt
+            # but really, 15 seconds is more reliable
             print(
                 "status code is {0}, waiting 15 seconds to retry...".format(status))
             sleep(15)
@@ -136,19 +141,17 @@ def get(_time=False):
     ## Check if XML or zip files already exist in cache ##
     ######################################################
     # test if XML file exists first to avoid re-downloading zip if unnecessary
-    if os.path.isfile(cwd + "/cache/extracted/" + filename + "v2.xml"):
+    xml_path = os.path.join(extract_dir, filename + "v2.xml")
+    zip_path = os.path.join(cache_dir, filename + "v2.zip")
+    if os.path.isfile(xml_path):
         print("XML file exists")
-        if _time:
-            print("took {0}s".format(time() - initial_time))
-        return cwd + "/cache/extracted/" + filename + "v2.xml"
+        return xml_path
     # test if zip file exists
-    if os.path.isfile(cwd + "/cache/" + filename + "v2.zip"):
-        print("zip file exists, unzipping", end="")
-        unzip_xml(cwd + "/cache/" + filename + "v2.zip")
+    if os.path.isfile(zip_path):
+        print("zip file exists, unzipping...", end="")
+        unzip_xml(zip_path)
         print("done")
-        if _time:
-            print("took {0}s".format(time() - initial_time))
-        return cwd + "/cache/extracted/" + filename + "v2.xml"
+        return zip_path
     print("does not exist\ndownloading...")
 
     ########################################################
@@ -160,7 +163,7 @@ def get(_time=False):
         try:
             # clean up old zip files
             cleanOldCache(filename)
-            wget.download(grant_url, "cache/")
+            wget.download(grant_url, cache_dir)
             successful = True
         # sometimes the site prevents connection due to crawl-delay
         except ConnectionError:
@@ -173,7 +176,7 @@ def get(_time=False):
             print("remote disconnected, verifying if file exists...")
             # if the zip file exists, then wget downloaded it
             # otherwise it stays as a .tmp file
-            if os.path.isfile(cwd + "/cache/" + filename + "v2.zip"):
+            if os.path.isfile(zip_path):
                 successful = True
                 print("file exists, continuing")
             else:
@@ -188,7 +191,5 @@ def get(_time=False):
     ## Unzip and return the FULL filepath ##
     ########################################
     print("\nunzipping")
-    unzip_xml(cwd + "/cache/" + filename + "v2.zip")
-    if _time:
-        print("took {0}s".format(time() - initial_time))
-    return cwd + "/cache/extracted/" + filename + "v2.xml"
+    unzip_xml(zip_path)
+    return xml_path
