@@ -445,7 +445,7 @@ for index, agency  in enumerate(agencyList):
         paragraph.add_run(f"\nAgency Name: {i.agencyName}").bold = True
         paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}").bold = True
         paragraph.add_run(f"\nPost Date:\t\t\t\t\t\t{i.postDate}").bold = True
-        paragraph.add_run(f"\nDue Date:\t\t\t\t\t\t{i.dueDate}").bold = True
+        paragraph.add_run(f"\nProposal Due Date:\t\t\t\t\t\t{i.dueDate}").bold = True
         paragraph.add_run(f"\nExpected Number of awards:\t\t\t{i.numAwards}").bold = True
         paragraph.add_run(f"\nEstimated total program funding:\t\t{i.totalFunding}").bold = True
         paragraph.add_run(f"\nAward Ceiling:\t\t\t\t\t{i.awardCeiling}").bold = True
@@ -455,12 +455,12 @@ for index, agency  in enumerate(agencyList):
 
         run = paragraph.add_run(f"\n\nPurpose: ")
         run.bold = True
-        run.italic = True
+        
 
         run = paragraph.add_run(f"{i.description}")
         font = run.font
         font.size = Pt(12)
-        font.italic = True
+        # font.italic = True
         font.name = 'Times New Roman'
 
         # Print eligibility information
@@ -468,6 +468,9 @@ for index, agency  in enumerate(agencyList):
         run.bold = True
 
         run = paragraph.add_run(f"{i.eligApplicants}")
+        font = run.font
+        font.size = Pt(12)
+        font.name = 'Times New Roman'
         paragraph.add_run(f"\n")
 
         # Print contact information if available
