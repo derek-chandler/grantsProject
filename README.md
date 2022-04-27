@@ -297,6 +297,11 @@ XML Parsing/Grant Generation
 
 ## word.py
 ### add_bookmark
+* Generateds bookmark into the document
 ### add_link
+* generate a hyperlink that is linked to a bookmark
 ### add_hyperlink
+* adds a hyperlink that is connected to a website externally
 ### insert_paragraph_after
+* Used to insert paragraphs at a certian index. 
+* It was necessary to manually create this method because DocX did not have a built in method.
