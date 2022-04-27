@@ -3,8 +3,8 @@ import html as html
 import os
 import threading
 import xml.etree.ElementTree as et
-from tkinter import *
-from tkinter import messagebox
+from tkinter import (BOTTOM, LEFT, RIGHT, TOP, Button, Frame, Label, Tk,
+                     messagebox)
 
 import docx
 from docx.enum.text import WD_ALIGN_PARAGRAPH
