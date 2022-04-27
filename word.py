@@ -1,11 +1,10 @@
 import docx
 from docx import Document
 from docx.enum.dml import MSO_THEME_COLOR_INDEX
-from docx.shared import Length
-from docx.text.paragraph import Paragraph
-from docx.oxml.xmlchemy import OxmlElement
-from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml.xmlchemy import OxmlElement
+from docx.shared import Length, Pt
+from docx.text.paragraph import Paragraph
 
 
 def add_bookmark(paragraph, bookmark_text, bookmark_name):
@@ -30,6 +29,7 @@ def add_bookmark(paragraph, bookmark_text, bookmark_name):
     end.set(docx.oxml.ns.qn('w:name'), bookmark_name)
     tag.append(end)
 
+
 def add_link(paragraph, link_to, text, tool_tip=None):
     # create hyperlink node
     hyperlink = docx.oxml.shared.OxmlElement('w:hyperlink')
@@ -52,10 +52,12 @@ def add_link(paragraph, link_to, text, tool_tip=None):
     r.font.color.theme_color = MSO_THEME_COLOR_INDEX.HYPERLINK
     r.font.underline = True
 
+
 def add_hyperlink(paragraph, text, url):
     # This gets access to the document.xml.rels file and gets a new relation id value
     part = paragraph.part
-    r_id = part.relate_to(url, docx.opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
+    r_id = part.relate_to(
+        url, docx.opc.constants.RELATIONSHIP_TYPE.HYPERLINK, is_external=True)
 
     # Create the w:hyperlink tag and add needed values
     hyperlink = docx.oxml.shared.OxmlElement('w:hyperlink')
@@ -71,14 +73,15 @@ def add_hyperlink(paragraph, text, url):
     hyperlink.append(new_run)
 
     # Create a new Run object and add the hyperlink into it
-    r = paragraph.add_run ()
-    r._r.append (hyperlink)
+    r = paragraph.add_run()
+    r._r.append(hyperlink)
 
     # A workaround for the lack of a hyperlink style (doesn't go purple after using the link)
     # Delete this if using a template that has the hyperlink style in it
     r.font.color.theme_color = MSO_THEME_COLOR_INDEX.HYPERLINK
     r.font.underline = True
     return hyperlink
+
 
 def insert_paragraph_after(paragraph, text=None, style=None):
     """Insert a new paragraph after the given paragraph."""
@@ -92,10 +95,11 @@ def insert_paragraph_after(paragraph, text=None, style=None):
         new_para.style = style
     return new_para
 
+
 if __name__ == "__main__":
     doc = docx.Document('templet.docx')
 
-    #iterate over the paragraphs in the document
+    # iterate over the paragraphs in the document
     for index, para in enumerate(doc.paragraphs):
-        #print the text of each paragraph
+        # print the text of each paragraph
         print(f"{index} {para.text}")

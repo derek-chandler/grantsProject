@@ -1,16 +1,18 @@
-import xml.etree.ElementTree as et
+import datetime
 import html as html
-import GrantDownloader
+import os
+import threading
+import xml.etree.ElementTree as et
 from tkinter import *
 from tkinter import messagebox
-from tkcalendar import DateEntry
-import os
-import datetime
-import word
+
 import docx
-from docx.shared import Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-import threading
+from docx.shared import Pt
+from tkcalendar import DateEntry
+
+import GrantDownloader
+import word
 
 # dictionary of agencies using agency code as key
 # these were all the agencies in the search function for Grants.gov
@@ -114,13 +116,18 @@ def generateAgencyName(agencyCode):
     return agencyCode
 
 # function to generate link to grant from grant ID
+
+
 def generateLink(grantID):
 
-    link =(f"https://www.grants.gov/web/grants/view-opportunity.html?oppId={grantID}")
+    link = (
+        f"https://www.grants.gov/web/grants/view-opportunity.html?oppId={grantID}")
     return link
 
 # function to reduce the number of words for a string
 # will help to reduce the number of words in the description
+
+
 def wordLimiter(string, limit):
     string = string.split()[:limit]
     string = " ".join(string) + "..."
@@ -128,6 +135,8 @@ def wordLimiter(string, limit):
 
 # create table of unique agencies (want to improve this, lot of redudancies related
 # to multiple instances of the same agency with additional information)
+
+
 def tableOfContents(listA, agency):
 
     if agency in listA:                     # if the agency is already in the list, we don't need to add it again
@@ -172,6 +181,7 @@ class Grant:
 
 # ********************************************MAIN FUNCTIONS*****************************************************************
 
+
 def printGrant(grant):
     print("Agency name:                     " + grant.agencyName)
     print("Opportunity title:               " + grant.opportunityTitle)
@@ -180,9 +190,12 @@ def printGrant(grant):
     print("Due date:                        " +
           grant.dueDate)
     print("Expected Number of awards:       " + grant.numAwards)
-    print("Estimated total program funding: " + addCommasAndDollarSign(grant.totalFunding))
-    print("Award Ceiling:                   " + addCommasAndDollarSign(grant.awardCeiling))
-    print("Award floor:                     " + addCommasAndDollarSign(grant.awardFloor))
+    print("Estimated total program funding: " +
+          addCommasAndDollarSign(grant.totalFunding))
+    print("Award Ceiling:                   " +
+          addCommasAndDollarSign(grant.awardCeiling))
+    print("Award floor:                     " +
+          addCommasAndDollarSign(grant.awardFloor))
     print("Funding opportunity number:      " + grant.oppNumber)
     print()
     print("Purpose: " + grant.description)
@@ -253,13 +266,18 @@ def grab_date():
     userdateone = calone.get_date()
     userdatetwo = caltwo.get_date()
     if userdateone > userdatetwo:
-        messagebox.showerror("Improper Date Range", "Please ensure your first date is before your second date")
-    else: root.destroy()
+        messagebox.showerror(
+            "Improper Date Range", "Please ensure your first date is before your second date")
+    else:
+        root.destroy()
 
 # Function for usage in multithreading of grantdownloader.py
+
+
 def downloadxml():
     global mytree
     mytree = et.parse(GrantDownloader.get())
+
 
 # Set what function other thread will execute
 th = threading.Thread(target=downloadxml)
@@ -271,7 +289,8 @@ userdateone = calone.get_date()
 userdatetwo = caltwo.get_date()
 
 # Button Grabs selected dates then closes if userdateone > userdatetwo
-my_button = Button(root, text="Confirm", activebackground='gray', command=grab_date)
+my_button = Button(root, text="Confirm",
+                   activebackground='gray', command=grab_date)
 my_button.pack(pady=10, padx=10, in_=bottom, side=RIGHT)
 
 # Location for date to post
@@ -322,18 +341,27 @@ for opportunity in myroot:
         grant = Grant(
             agencyCode=getOpportunityInfo(opportunity, 'AgencyCode'),
             agencyName=getOpportunityInfo(opportunity, 'AgencyName'),
-            opportunityTitle=html.unescape(getOpportunityInfo(opportunity, 'OpportunityTitle')),
-            postDate= dateStringVersion(getOpportunityInfo(opportunity, 'PostDate')),
-            dueDate= dateStringVersion(getOpportunityInfo(opportunity, 'CloseDate')),
-            numAwards=getOpportunityInfo(opportunity, 'ExpectedNumberOfAwards'),
-            totalFunding=getOpportunityInfo(opportunity, 'EstimatedTotalProgramFunding'),
+            opportunityTitle=html.unescape(
+                getOpportunityInfo(opportunity, 'OpportunityTitle')),
+            postDate=dateStringVersion(
+                getOpportunityInfo(opportunity, 'PostDate')),
+            dueDate=dateStringVersion(
+                getOpportunityInfo(opportunity, 'CloseDate')),
+            numAwards=getOpportunityInfo(
+                opportunity, 'ExpectedNumberOfAwards'),
+            totalFunding=getOpportunityInfo(
+                opportunity, 'EstimatedTotalProgramFunding'),
             awardCeiling=getOpportunityInfo(opportunity, 'AwardCeiling'),
             awardFloor=getOpportunityInfo(opportunity, 'AwardFloor'),
             oppNumber=getOpportunityInfo(opportunity, 'OpportunityNumber'),
-            description = html.unescape(getOpportunityInfo(opportunity, 'Description')),
-            eligApplicants=html.unescape(getOpportunityInfo(opportunity, 'AdditionalInformationOnEligibility')),
-            grantLink =generateLink(getOpportunityInfo(opportunity, 'OpportunityID')),
-            contactInfo=html.unescape(getOpportunityInfo(opportunity, 'GrantorContactText'))
+            description=html.unescape(
+                getOpportunityInfo(opportunity, 'Description')),
+            eligApplicants=html.unescape(getOpportunityInfo(
+                opportunity, 'AdditionalInformationOnEligibility')),
+            grantLink=generateLink(getOpportunityInfo(
+                opportunity, 'OpportunityID')),
+            contactInfo=html.unescape(getOpportunityInfo(
+                opportunity, 'GrantorContactText'))
         )
         tableOfContents(agencyList, grant.distinctAgency)
         # Create a grant object
@@ -393,7 +421,7 @@ agency_check = set()
 agency_name_check = set()
 
 #! This prints generates the bookmarks
-for index, agency  in enumerate(agencyList):
+for index, agency in enumerate(agencyList):
 
     grantDictionary[agency].sort(key=lambda x: x.dueDate)
 
@@ -406,12 +434,13 @@ for index, agency  in enumerate(agencyList):
             paragraph = doc.add_paragraph()
             paragraph_format = paragraph.paragraph_format
             paragraph_format.line_spacing = 1.0
-            bookmark_para = word.add_bookmark(paragraph, agency, f"bookmark{str(index)}")
-
+            bookmark_para = word.add_bookmark(
+                paragraph, agency, f"bookmark{str(index)}")
 
             paragraph_format = pointer.paragraph_format
             paragraph_format.line_spacing = 1.0
-            word.insert_paragraph_after(pointer, word.add_link(pointer, f"bookmark{str(index)}", agency))
+            word.insert_paragraph_after(pointer, word.add_link(
+                pointer, f"bookmark{str(index)}", agency))
             paracount += 1
             pointer = doc.paragraphs[paracount]
 
@@ -437,25 +466,29 @@ for index, agency  in enumerate(agencyList):
             paracount += 1
             pointer = doc.paragraphs[paracount]
 
-
         paragraph = doc.add_paragraph()
         paragraph_format = paragraph.paragraph_format
         paragraph_format.line_spacing = 1.0
 
         paragraph.add_run(f"\nAgency Name: {i.agencyName}").bold = True
-        paragraph.add_run(f"\nOpportunity Title: {i.opportunityTitle}").bold = True
+        paragraph.add_run(
+            f"\nOpportunity Title: {i.opportunityTitle}").bold = True
         paragraph.add_run(f"\nPost Date:\t\t\t\t\t\t{i.postDate}").bold = True
-        paragraph.add_run(f"\nProposal Due Date:\t\t\t\t\t\t{i.dueDate}").bold = True
-        paragraph.add_run(f"\nExpected Number of awards:\t\t\t{i.numAwards}").bold = True
-        paragraph.add_run(f"\nEstimated total program funding:\t\t{i.totalFunding}").bold = True
-        paragraph.add_run(f"\nAward Ceiling:\t\t\t\t\t{i.awardCeiling}").bold = True
-        paragraph.add_run(f"\nAward Floor:\t\t\t\t\t{i.awardFloor}").bold = True
-        paragraph.add_run(f"\nFunding Opportunity Number:\t\t\t{i.oppNumber}").bold = True
-
+        paragraph.add_run(
+            f"\nProposal Due Date:\t\t\t\t\t\t{i.dueDate}").bold = True
+        paragraph.add_run(
+            f"\nExpected Number of awards:\t\t\t{i.numAwards}").bold = True
+        paragraph.add_run(
+            f"\nEstimated total program funding:\t\t{i.totalFunding}").bold = True
+        paragraph.add_run(
+            f"\nAward Ceiling:\t\t\t\t\t{i.awardCeiling}").bold = True
+        paragraph.add_run(
+            f"\nAward Floor:\t\t\t\t\t{i.awardFloor}").bold = True
+        paragraph.add_run(
+            f"\nFunding Opportunity Number:\t\t\t{i.oppNumber}").bold = True
 
         run = paragraph.add_run(f"\n\nPurpose: ")
         run.bold = True
-        
 
         run = paragraph.add_run(f"{i.description}")
         font = run.font
@@ -477,14 +510,12 @@ for index, agency  in enumerate(agencyList):
         if (i.contactInfo != 'N/A'):
             run = paragraph.add_run(f"\nContact: ")
             run.bold = True
-            
-            
+
             contactArr = i.contactInfo.split('<br/>')
             for j in contactArr:
                 run = paragraph.add_run(f"\n{j}")
-            
+
             paragraph.add_run(f"\n")
-        
 
         #! Add hyperlink to grant
         link_para = doc.add_paragraph()
