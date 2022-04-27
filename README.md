@@ -296,4 +296,7 @@ XML Parsing/Grant Generation
 
 
 ## word.py
-sdfsd
+### add_bookmark
+### add_link
+### add_hyperlink
+### insert_paragraph_after
