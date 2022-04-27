@@ -296,12 +296,56 @@ XML Parsing/Grant Generation
 
 
 ## word.py
-### add_bookmark
-* Generateds bookmark into the document
-### add_link
-* generate a hyperlink that is linked to a bookmark
-### add_hyperlink
-* adds a hyperlink that is connected to a website externally
-### insert_paragraph_after
-* Used to insert paragraphs at a certian index. 
-* It was necessary to manually create this method because DocX did not have a built in method.
+
+### Imported External Libraries
+ * docx
+   * docx
+   * docx.Document
+   * docx.enum.dml.MSO_THEME_COLOR_PACK
+   * docx.enum.text.WD_ALIGN_PARAGRAPH
+   * docx.oxml.xmlchemy.OxmlElement
+   * docx.shared.Length
+   * docx.shared.Pt
+   * docx.text.paragraph.Paragraph
+
+### Functions
+
+***add_bookmark***
+
+ * Description
+   * Generates a bookmark into the document
+ * Args
+   * **paragraph** : a given paragraph object
+   * **bookmark_text** : the text to place a bookmark at
+   * **bookmark_name** : the internal name for the bookmark
+
+***add_link***
+
+ * Description
+   * Generate a hyperlink that is linked to a bookmark
+ * Args
+   * **paragraph** : a given paragraph object
+   * **link_to** : the internal name to link the bookmark to
+   * **text** : the text to put in the paragraph
+ * Optional args
+   * **tool_tip** : a tooltip. set to `None` by default
+
+***add_hyperlink***
+
+ * Description
+   * Adds a hyperlink that is connected to a website externally
+ * Args
+   * **paragraph** : a given paragraph object
+   * **text** : the text to put in the paragraph
+   * **url** : the website URL to add to the paragraph 
+
+***insert_paragraph_after***
+
+ * Description
+   * Used to insert paragraphs at a certian index. 
+   * It was necessary to manually create this method because the python DocX library did not have a built in method.
+ * Args
+   * **paragraph** : a given paragraph object
+ * Optional args
+   * **text** : text to put in the paragraph. set to `None` by default
+   * **style** : paragraph styling options. set to `None` by default
