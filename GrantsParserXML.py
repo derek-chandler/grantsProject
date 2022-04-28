@@ -490,7 +490,7 @@ for index, agency in enumerate(agencyList):
             f"\nOpportunity Title: {i.opportunityTitle}").bold = True
         paragraph.add_run(f"\nPost Date:\t\t\t\t\t\t{i.postDate}").bold = True
         paragraph.add_run(
-            f"\nProposal Due Date:\t\t\t\t\t\t{i.dueDate}").bold = True
+            f"\nProposal Due Date:\t\t\t\t\t{i.dueDate}").bold = True
         paragraph.add_run(
             f"\nExpected Number of awards:\t\t\t{i.numAwards}").bold = True
         paragraph.add_run(
