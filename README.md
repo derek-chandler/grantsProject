@@ -37,6 +37,22 @@ If you wish to generate another report *in the same day*, please rename or move 
 
 ---
 
+## Changing the Template
+  * GrantsParser has two possible templates: one with a Marshall University header and watermark and one with an Ops_Watch header and watermark
+  * THere are two provided templates in the programs root directory:
+    * `Marshall template.docx` - this is the Marshall University template
+    * `OpsWatch template.docx` - this is the Cornerstone Ops-Watch template
+  * To change the template, search for "ChangeTemplate" in `GrantsParserXML`
+  * There, you will see this line of code:
+    * `doc = docx.Document(<DocumentName>)`
+  * The filename given to doxc.Document(<DocumentName>) is an argument that will dictate teh template that will be used to generate our report
+  * For example, to use the Marshall University template, the line of code below ChangeTemplate should look like this:
+    * `doc = docx.Document("Marshall template.docx")`
+  * To use the template for Cornerstone Ops-Watch, the line of code below ChangeTemplate should look like this:
+    * `doc = docx.Document("OpsWatch template.docx")`
+    * 
+---
+
 <br>
 <br>
 

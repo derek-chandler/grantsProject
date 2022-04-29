@@ -400,10 +400,17 @@ agencyList.sort()
 # for x in agencyList:
 #     print(x)
 
-#! Opens the word templet file, change the string to use a differnt template
-# Provided templates are templet.docx and OpsWatch template.docx
-doc = docx.Document("OpsWatch template.docx")
+#####################################################################################################################
+#  ChangeTemplate 
 
+#! Opens the word templet file. Change the string passed as an argument to the method .Document to use a different template
+# Provided templates are:
+#   Marshall template.docx
+#   OpsWatch template.docx
+
+doc = docx.Document("Marshall template.docx")
+
+#####################################################################################################################
 
 #! change text in paragraph 9 to the number of grants
 doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
