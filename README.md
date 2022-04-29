@@ -39,7 +39,7 @@ If you wish to generate another report *in the same day*, please rename or move 
 
 ## Changing the Template
   * GrantsParser has two possible templates: one with a Marshall University header and watermark and one with an Ops_Watch header and watermark
-  * THere are two provided templates in the programs root directory:
+  * There are two provided templates in the programs root directory:
     * `Marshall template.docx` - this is the Marshall University template
     * `OpsWatch template.docx` - this is the Cornerstone Ops-Watch template
   * To change the template, search for "ChangeTemplate" in `GrantsParserXML`
