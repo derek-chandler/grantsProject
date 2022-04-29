@@ -27,7 +27,7 @@ def add_bookmark(paragraph, bookmark_text, bookmark_name):
     run = paragraph.add_run()
     run.bold = True
     font = run.font
-    font.size = Pt(16)
+    font.size = Pt(14)
     font.underline = True
     tag = run._r
     start = docx.oxml.shared.OxmlElement('w:bookmarkStart')
