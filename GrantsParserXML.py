@@ -509,7 +509,7 @@ for index, agency in enumerate(agencyList):
         font = run.font
         font.size = Pt(12)
         # font.italic = True
-        font.name = 'Times New Roman'
+        # font.name = 'Times New Roman'
 
         # Print eligibility information
         run = paragraph.add_run(f"\n\nEligible Applicants: ")
