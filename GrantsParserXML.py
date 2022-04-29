@@ -408,7 +408,7 @@ agencyList.sort()
 #   Marshall template.docx
 #   OpsWatch template.docx
 
-doc = docx.Document("Marshall template.docx")
+doc = docx.Document("OpsWatch template.docx")
 
 #####################################################################################################################
 
@@ -525,7 +525,7 @@ for index, agency in enumerate(agencyList):
         run = paragraph.add_run(f"{i.eligApplicants}")
         font = run.font
         font.size = Pt(12)
-        font.name = 'Times New Roman'
+        #font.name = 'Times New Roman'
         paragraph.add_run(f"\n")
 
         # Print contact information if available
