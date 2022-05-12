@@ -413,7 +413,11 @@ doc = docx.Document("OpsWatch template.docx")
 #####################################################################################################################
 
 #! change text in paragraph 9 to the number of grants
-doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
+# doc.paragraphs[9].text = str(datetime.date.today().strftime("%B %d, %Y"))
+run = doc.paragraphs[9].add_run(str(datetime.date.today().strftime("%B %d, %Y")))
+font = run.font
+font.size = Pt(14)
+font.name = 'Calibri'
 
 #! Random paragraph object to position the start of the hyperlink prints
 spacerpara = doc.add_paragraph("\n")
