@@ -11,7 +11,7 @@ This project generates US Government grant reports based on data provided by [gr
  * [Python 3.10](https://www.python.org/downloads/) or above
  * Ability to install Python packages with [Python pip](https://packaging.python.org/en/latest/tutorials/installing-packages/#requirements-for-installing-packages)  
  * All python packages in [requirements.txt](https://github.com/derek-chandler/grantsProject/blob/main/requirements.txt)
-   * If you are using Windows, you can safely skip this step as the provided `GrantParser.bat` file will automatically install these packages.
+   * The provided `GrantParser.bat` or `GrantParser-unix.sh` files will create a virtual environment and download these requirements
 
 To view the generated report properly, Microsoft Word is required.
 
@@ -25,8 +25,9 @@ To view the generated report properly, Microsoft Word is required.
  * Linux/macOS
     1. Install all requirements as instructed above
        * You may need to install tkinter on your system to be able to launch the GUI 
-    2. Execute the program with `python GrantsParserXML.py`
-    
+    2. Execute the program
+       * Run `GrantParser-unix.sh` or run from the terminal with `python GrantsParserXML.py`
+
  3. Choose a date range with the provided calendar GUI.
     * The default date range is from the past 7 days to the current date inclusive.
  4. Once a date range is selected, click **Confirm** and a report will be generated
