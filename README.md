@@ -51,7 +51,6 @@ If you wish to generate another report *in the same day*, please rename or move 
     * `doc = docx.Document("Marshall template.docx")`
   * To use the template for Cornerstone Ops-Watch, the line of code below ChangeTemplate should look like this:
     * `doc = docx.Document("OpsWatch template.docx")`
-    * 
 ---
 
 <br>
